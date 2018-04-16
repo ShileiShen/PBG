@@ -17,7 +17,7 @@ class Position:
         self.x=self.x+value
         return self.x
         
- #   def add_y(self, value):
+    def add_y(self, value):
         self.y=self.y+value
         return self.y
         
