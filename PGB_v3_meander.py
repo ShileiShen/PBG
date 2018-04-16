@@ -15,7 +15,7 @@ print('Using gdspy module version ' + gdspy.__version__)
 #%% 
 ## Parameters ##  ALL UNITS IN MICRONS
 
-filename = 'PBG_straight_L3mm_Ncell8_2umRes_788L_W20um_27Ohms.gds'
+filename = '2umRes_L3mm_8cells_W20_MEANDER2.gds'
 filepath = 'C:/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/2018'
 
 l_Zhigh=3000
@@ -24,7 +24,7 @@ t_Zhigh=20
 l_Zlow=3000
 t_Zlow=242
 
-l_res=788   #length of lambda/2 resonator at 7.3 GHz
+l_res=788  #length of lambda/2 resonator at 7.3 GHz
 t_res=2 #width of the resonator
 
 gap=4 #gap between the Zlow and the ground plane
@@ -38,15 +38,18 @@ w_sep=4 #C finger separation
 h_sep=2 #C finger vertical distance from ground plane fingers to resonator
 delta_x=0 #offset for starting point of C fingers
 
+R_inner_low=700/2
+R_inner_high=900/2
 
 c_gap=0
 c_length=0
 ## End of parameters ##
+spec = {'number_of_points': 0.5}
 #%% function that adds Z low block
 def Zlow(position, l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    Zlow = gdspy.Rectangle( (position.x, position.y),   (position.x+l_Zlow, position.y+t_Zlow) )
-    position.x=position.x+l_Zlow
-    return Zlow
+    Zlow1 = gdspy.Rectangle( (position.x, position.y), ( position.x+l_Zlow,  position.y+t_Zlow) )
+    
+    return Zlow1
     
 #%%    
 def Zhigh(position, l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
@@ -57,8 +60,8 @@ def Zhigh(position, l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
     return Zhigh
     
 #%%    
-def bendRightZlow(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    R_inner=700/2
+def bendRightZlow(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=700/2
     R=R_inner + t_Zlow
     
 
@@ -70,7 +73,8 @@ def bendRightZlow(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
         R,
         inner_radius=R_inner,
         initial_angle=-2.5*numpy.pi,
-        final_angle=-1.5*numpy.pi)
+        final_angle=-1.5*numpy.pi,
+        **spec)
     cell.add(Zlow1)
     
     
@@ -85,8 +89,8 @@ def bendRightZlow(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
     return cell
     
 #%%    
-def bendRightZhigh(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    R_inner=900/2
+def bendRightZhigh(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow,R_inner):
+    #R_inner=900/2
     R=R_inner + t_Zhigh
     position.y=position.y +0.5*(t_Zlow-t_Zhigh)
 
@@ -98,7 +102,8 @@ def bendRightZhigh(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
         R,
         inner_radius=R_inner,
         initial_angle=-2.5*numpy.pi,
-        final_angle=-1.5*numpy.pi)
+        final_angle=-1.5*numpy.pi,
+        **spec)
     cell.add(Zhigh1)
     
     
@@ -113,8 +118,8 @@ def bendRightZhigh(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
     position.y=position.y- 0.5*(t_Zlow-t_Zhigh)   
     return cell    
 #%%  
-def bendRightZlow2(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    R_inner=700/2
+def bendRightZlow2(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=700/2
     R=R_inner + t_Zlow
     l_residual=l_Zlow- numpy.pi*(R_inner+R)/2
 
@@ -130,7 +135,8 @@ def bendRightZlow2(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
         R,
         inner_radius=R_inner,
         initial_angle=-2.5*numpy.pi,
-        final_angle=-1.5*numpy.pi)
+        final_angle=-1.5*numpy.pi,
+        **spec)
     cell.add(Zlow1)
          
     position.y=center_y-R
@@ -152,8 +158,8 @@ def ZlowBack(position,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
     return Zlow
 
 #%%    
-def bendLeftZlow(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    R_inner=700/2
+def bendLeftZlow(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=700/2
     R=R_inner + t_Zlow
     l_residual=l_Zlow- numpy.pi*(R_inner+R)/2
    
@@ -167,7 +173,8 @@ def bendLeftZlow(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
         R,
         inner_radius=R_inner,
         initial_angle=-0.5*numpy.pi,
-        final_angle=-1.5*numpy.pi)
+        final_angle=-1.5*numpy.pi,
+        **spec)
     cell.add(Zlow1)
     
     
@@ -183,8 +190,8 @@ def bendLeftZlow(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
     return cell
     
 #%%    
-def bendLeftZhigh(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    R_inner=900/2
+def bendLeftZhigh(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=900/2
     R=R_inner + t_Zhigh
     l_residual=l_Zlow- numpy.pi*(R_inner+R)/2
 
@@ -198,7 +205,8 @@ def bendLeftZhigh(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
         R,
         inner_radius=R_inner,
         initial_angle=-0.5*numpy.pi,
-        final_angle=-1.5*numpy.pi)
+        final_angle=-1.5*numpy.pi,
+        **spec)
     cell.add(Zlow1)
     
     
@@ -215,8 +223,8 @@ def bendLeftZhigh(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
     return cell
     
 #%%
-def bendLeftZhigh2(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    R_inner=900/2
+def bendLeftZhigh2(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=900/2
     R=R_inner + t_Zhigh
     l_residual=l_Zhigh- numpy.pi*(R_inner+R)/2
     
@@ -235,16 +243,46 @@ def bendLeftZhigh2(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
         R,
         inner_radius=R_inner,
         initial_angle=-0.5*numpy.pi,
-        final_angle=-1.5*numpy.pi)
+        final_angle=-1.5*numpy.pi,
+        **spec)
     cell.add(Zlow1)
     
     position.y= center_y-R-0.5*(t_Zlow-t_Zhigh)
     
     return cell
 
+
 #%%
-def bendLeftZhighEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    R_inner=900/2
+def bendRightZhigh2(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=900/2
+    R=R_inner + t_Zhigh
+    l_residual=l_Zhigh- numpy.pi*(R_inner+R)/2
+    
+    position.y=position.y +0.5*(t_Zlow-t_Zhigh)   
+
+    Zlow2 = gdspy.Rectangle( (position.x, position.y),   (position.x+l_residual, position.y+t_Zhigh) )
+    cell.add(Zlow2)
+    
+    position.x=position.x+l_residual
+    
+    center_y=position.y-R_inner
+    center_x=position.x
+    
+    Zlow1=gdspy.Round(
+        (center_x, center_y),
+        R,
+        inner_radius=R_inner,
+        initial_angle=-2.5*numpy.pi,
+        final_angle=-1.5*numpy.pi,
+        **spec)
+    cell.add(Zlow1)
+    
+    position.y= center_y-R-0.5*(t_Zlow-t_Zhigh)
+    
+    return cell
+#%%
+def bendLeftZhighEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=900/2
     R=R_inner + t_Zhigh
     l_residual=0.5*(l_Zhigh- numpy.pi*(R_inner+R)/2)
     
@@ -263,7 +301,8 @@ def bendLeftZhighEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
         R,
         inner_radius=R_inner,
         initial_angle=-0.5*numpy.pi,
-        final_angle=-1.5*numpy.pi)
+        final_angle=-1.5*numpy.pi,
+        **spec)
     cell.add(Zlow1)
     
     position.y= center_y-R
@@ -276,8 +315,8 @@ def bendLeftZhighEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
     return cell
 
 #%%
-def bendLeftZlowEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    R_inner=700/2
+def bendLeftZlowEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=700/2
     R=R_inner + t_Zlow
     l_residual=0.5*(l_Zlow- numpy.pi*(R_inner+R)/2)
       
@@ -294,7 +333,8 @@ def bendLeftZlowEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
         R,
         inner_radius=R_inner,
         initial_angle=-0.5*numpy.pi,
-        final_angle=-1.5*numpy.pi)
+        final_angle=-1.5*numpy.pi,
+        **spec)
     cell.add(Zlow1)
     
     position.y= center_y-R
@@ -308,8 +348,8 @@ def bendLeftZlowEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
 
     
 #%%
-def bendRightZhighEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    R_inner=900/2
+def bendRightZhighEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=900/2
     R=R_inner + t_Zhigh
     l_residual=0.5*(l_Zhigh- numpy.pi*(R_inner+R)/2)
     
@@ -328,7 +368,8 @@ def bendRightZhighEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
         R,
         inner_radius=R_inner,
         initial_angle=-2.5*numpy.pi,
-        final_angle=-1.5*numpy.pi)
+        final_angle=-1.5*numpy.pi,
+        **spec)
     cell.add(Zlow1)
     
     position.y= center_y-R
@@ -340,9 +381,134 @@ def bendRightZhighEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
     position.x=position.x-l_residual
     return cell    
     
+    
 #%%
-def bendRightZlowEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    R_inner=700/2
+def bendRightZhighRes(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=900/2
+    R=R_inner + t_Zhigh
+    l1=0
+    l2=350
+    l_residual=(l_Zhigh- numpy.pi*(R_inner+R)/2)-l1-l2
+    
+    position.y=position.y +0.5*(t_Zlow-t_Zhigh)   
+
+    Zlow2 = gdspy.Rectangle( (position.x, position.y),   (position.x+l1, position.y+t_Zhigh) )
+    cell.add(Zlow2)
+    
+    position.x=position.x+l1
+    
+    center_y=position.y-R_inner
+    center_x=position.x
+    
+    Zlow1=gdspy.Round(
+        (center_x, center_y),
+        R,
+        inner_radius=R_inner,
+        initial_angle=-1.5*numpy.pi,
+        final_angle=-2.0*numpy.pi,
+        **spec)
+    cell.add(Zlow1)
+    
+    position.y= center_y
+    position.x=position.x+R_inner
+    Zlow2 = gdspy.Rectangle( (position.x, position.y),   (position.x+t_Zhigh, position.y-l_residual) )
+    cell.add(Zlow2)
+    
+    position.y= position.y-l_residual
+    
+    
+    
+    center_y=position.y
+    center_x=position.x-R_inner
+    
+    Zlow3=gdspy.Round(
+        (center_x, center_y),
+        R,
+        inner_radius=R_inner,
+        initial_angle=-2.0*numpy.pi,
+        final_angle=-2.5*numpy.pi,
+        **spec)
+    cell.add(Zlow3)
+    
+    position.y= center_y-R
+    position.x=center_x
+    
+    Zlow4 = gdspy.Rectangle( (position.x, position.y),   (position.x-l2, position.y+t_Zhigh) )
+    cell.add(Zlow4)
+    
+    position.y= center_y-R-0.5*(t_Zlow-t_Zhigh)
+    position.x=position.x-l2
+    
+    position.x=position.x-l_res
+    
+    return cell    
+
+    
+    
+#%%
+def bendLeftZhighRes(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=900/2
+    R=R_inner + t_Zhigh
+    l1=350
+    l2=0
+    l_residual=(l_Zhigh- numpy.pi*(R_inner+R)/2)-l1-l2
+    
+    position.y=position.y +0.5*(t_Zlow-t_Zhigh)   
+    position.x=position.x-l_res
+    
+    
+    Zlow2 = gdspy.Rectangle( (position.x, position.y),   (position.x-l1, position.y+t_Zhigh) )
+    cell.add(Zlow2)
+    
+    position.x=position.x-l1
+    
+    center_y=position.y-R_inner
+    center_x=position.x
+    
+    Zlow1=gdspy.Round(
+        (center_x, center_y),
+        R,
+        inner_radius=R_inner,
+        initial_angle=-1.0*numpy.pi,
+        final_angle=-1.5*numpy.pi,
+        **spec)
+    cell.add(Zlow1)
+    
+    position.y= center_y
+    position.x=position.x-R
+    Zlow2 = gdspy.Rectangle( (position.x, position.y),   (position.x+t_Zhigh, position.y-l_residual) )
+    cell.add(Zlow2)
+    
+    position.y= position.y-l_residual
+    
+    
+    center_y=position.y
+    center_x=position.x+R
+    
+    Zlow3=gdspy.Round(
+        (center_x, center_y),
+        R,
+        inner_radius=R_inner,
+        initial_angle=-0.5*numpy.pi,
+        final_angle=-1.0*numpy.pi,
+        **spec)
+    cell.add(Zlow3)
+    
+    position.y= center_y-R
+    position.x=center_x
+    
+    Zlow4 = gdspy.Rectangle( (position.x, position.y),   (position.x+l2, position.y+t_Zhigh) )
+    cell.add(Zlow4)
+    
+    position.y= center_y-R-0.5*(t_Zlow-t_Zhigh)
+    position.x=position.x+l2
+    
+    
+    
+    return cell    
+#%%
+def bendRightZlowEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=700/2
     R=R_inner + t_Zlow
     l_residual=0.5*(l_Zlow - numpy.pi*(R_inner+R)/2)
      
@@ -359,7 +525,8 @@ def bendRightZlowEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
         R,
         inner_radius=R_inner,
         initial_angle=-2.5*numpy.pi,
-        final_angle=-1.5*numpy.pi)
+        final_angle=-1.5*numpy.pi,
+        **spec)
     cell.add(Zlow1)
     
     position.y= center_y-R
@@ -370,9 +537,67 @@ def bendRightZlowEqual(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
     position.y= center_y-R
     position.x=position.x-l_residual
     return cell    
+    
+    #%%
+def bendRightZlowEND(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    
+    R=R_inner + t_Zlow
+    l1=350
+    l2=0
+    l_residual=(l_Zlow- numpy.pi*(R_inner+R)/2)-l1-l2
+    
+    
+    Zlow2 = gdspy.Rectangle( (position.x, position.y),   (position.x+l1, position.y+t_Zlow) )
+    cell.add(Zlow2)
+    
+    position.x=position.x+l1
+    
+    center_y=position.y-R_inner
+    center_x=position.x
+    
+    Zlow1=gdspy.Round(
+        (center_x, center_y),
+        R,
+        inner_radius=R_inner,
+        initial_angle=-1.0*numpy.pi,
+        final_angle=-1.5*numpy.pi,
+        **spec)
+    cell.add(Zlow1)
+    
+    position.y= center_y
+    position.x=position.x-R
+    Zlow2 = gdspy.Rectangle( (position.x, position.y),   (position.x+t_Zhigh, position.y-l_residual) )
+    cell.add(Zlow2)
+    
+    position.y= position.y-l_residual
+    
+    
+    center_y=position.y
+    center_x=position.x+R
+    
+    Zlow3=gdspy.Round(
+        (center_x, center_y),
+        R,
+        inner_radius=R_inner,
+        initial_angle=-0.5*numpy.pi,
+        final_angle=-1.0*numpy.pi,
+        **spec)
+    cell.add(Zlow3)
+    
+    position.y= center_y-R
+    position.x=center_x
+    
+    Zlow4 = gdspy.Rectangle( (position.x, position.y),   (position.x+l2, position.y+t_Zhigh) )
+    cell.add(Zlow4)
+    
+    position.y= center_y-R-0.5*(t_Zlow-t_Zhigh)
+    position.x=position.x+l2
+    
+    
+    return cell    
 #%%
-def bendLeftZlow2(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-    R_inner=700/2
+def bendLeftZlow2(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner):
+    #R_inner=700/2
     R=R_inner + t_Zlow
     l_residual=l_Zlow- numpy.pi*(R_inner+R)/2
 
@@ -389,7 +614,8 @@ def bendLeftZlow2(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
         R,
         inner_radius=R_inner,
         initial_angle=-0.5*numpy.pi,
-        final_angle=-1.5*numpy.pi)
+        final_angle=-1.5*numpy.pi,
+        **spec)
     cell.add(Zlow1)
     
     position.y= center_y-R
@@ -417,7 +643,7 @@ def resonator(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
     x_step=2*w_c+2*w_sep
     number_of_fingers=(l_res-2*delta_x + x_step)//(x_step) #number of C fingers in one raw from one side only
 
-    for j in range(number_of_fingers):
+    for j in range(round(number_of_fingers)):
         addCfinger(x_start+j*x_step, y_init,1)
         addCfinger(x_start+j*x_step, y_init-t_res,0)
     
@@ -436,7 +662,7 @@ def resonator(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
     y_start_down=position.y -gap + gndRes_h 
     
 #fingers connected to ground planes
-    for i in range(number_of_fingers-1):
+    for i in range(round(number_of_fingers)-1):
         x_var1=x_start+(i+1)*(x_step)-w_sep-w_c
         y_var1=y_start_down
     
@@ -475,7 +701,7 @@ def resonator(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
 #cell=bendLeftZlowEqual(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow)
 #cell.add(Zhigh(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
 #
-##cell=resonator(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow)
+#cell=resonator(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow)
 #cell.add(Zhigh(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
 #
 #cell=bendRightZlowEqual(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow)
@@ -489,19 +715,48 @@ def resonator(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
 #cell.add(Zlow(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
 
 
-#%% No meander
+#%% Meander 2
 cell=gdspy.Cell('PGB')
 cursor=Position.Position()
 
-for i in range(number):
-    cell.add(Zlow(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
-    cell.add(Zhigh(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
-    
+cell.add(Zlow(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
+cell=bendRightZhigh(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_high)
+
+cell=bendLeftZlow(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_low)   
+cell=bendRightZhigh(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_high)
+
+cell=bendLeftZlow(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_low)
+cell=bendRightZhigh(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_high)
+
+cell=bendLeftZlow(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_low)
+cell=bendRightZhighRes(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_high)
+
 cell=resonator(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow)
-    
-for i in range(number):
-    cell.add(Zhigh(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
-    cell.add(Zlow(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
+
+cell=bendLeftZhighRes(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_high)
+cell=bendRightZlow2(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_low)
+
+cell=bendLeftZhigh2(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_high)
+
+cell=bendRightZlow2(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_low)
+cell=bendLeftZhigh2(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_high)
+
+cell=bendRightZlow2(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_low)
+cell=bendLeftZhigh2(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_high)
+cell=bendRightZlow2(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_low)
+#%% No meander
+#cell=gdspy.Cell('PGB')
+#cursor=Position.Position()
+#
+#for i in range(number):
+#    cell.add(Zlow(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
+#    cell.add(Zhigh(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
+#    
+##cell=resonator(cursor,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow)
+#    
+#for i in range(number):
+#    cell.add(Zhigh(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
+#    cell.add(Zlow(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))
 
     
 #%% 

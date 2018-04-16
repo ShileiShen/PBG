@@ -12,4 +12,13 @@ class Position:
     def __init__(self, x=0, y=0 ):
         self.x=x
         self.y=y
+        
+    def add_x(self, value):
+        self.x=self.x+value
+        return self.x
+        
+ #   def add_y(self, value):
+        self.y=self.y+value
+        return self.y
+        
     
