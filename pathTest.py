@@ -16,7 +16,8 @@ print('Using gdspy module version ' + gdspy.__version__)
 ## Parameters ##  ALL UNITS IN MICRONS
 
 filename = 'path_Test.gds'
-filepath = 'C:/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/2018'
+#filepath = 'C:/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/2018'
+filepath='/Users/mykhailo/Documents/UNSW/PBG'
 
 l_Zhigh=3000
 t_Zhigh=10
@@ -93,7 +94,7 @@ path_cell.add(
 ## ------------------------------------------------------------------ ##
 ## Output the layout to a GDSII file (default to all created cells).
 ## Set the units we used to micrometers and the precision to nanometers.
-gdspy.gds_print(filepath + "\\" + filename, unit=1.0e-6, precision=1.0e-9)
+gdspy.gds_print(filepath + "/" + filename, unit=1.0e-6, precision=1.0e-9)
 print('gds file saved to "' + filepath +"\ " + filename + '"')
 
 ## ------------------------------------------------------------------ ##
