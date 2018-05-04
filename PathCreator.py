@@ -27,25 +27,21 @@ def createPoly(width, length, direction='+x'):
 	cell.add(path)
 	position.move_x(length)
 
-def createArc90deg(width, radius, angle1, angle2):
+def createArc(width, radius, angle1, angle2):
 	path = initPath(width)
 	path.arc(radius, angle1, angle2, **spec)
 	cell.add(path)
-	position.move_x(radius)
-	if (angle2<angle1):
-		position.move_y(-radius)
-	if (angle2>angle1):
-		position.move_y(radius)
-
-def createArc180deg(width, radius, angle1, angle2):
-	path = initPath(width)
-	path.arc(radius, angle1, angle2, **spec)
-	cell.add(path)
-	if (angle2<angle1):
-		position.move_y(-2*radius)
-	if (angle2>angle1):
-		position.move_y(2*radius)
-
+	if abs(angle2-angle1)==numpy.pi:
+		if (angle2 < angle1):
+			position.move_y(-2 * radius)
+		if (angle2 > angle1):
+			position.move_y(2 * radius)
+	if abs(angle2 - angle1) == numpy.pi/2:
+		position.move_x(radius)
+		if (angle2<angle1):
+			position.move_y(-radius)
+		if (angle2>angle1):
+			position.move_y(radius)
 
 
 def resonator():
@@ -111,7 +107,7 @@ def resonator():
 
 
 createPoly(t_Zlow,l_Zlow)
-createArc90deg(t_Zhigh, R_inner_high, -numpy.pi / 2.0, 0)
+createArc(t_Zhigh, R_inner_high, -numpy.pi / 2.0, 0)
 createPoly(t_Zlow,l_Zlow)
 resonator()
 write()
