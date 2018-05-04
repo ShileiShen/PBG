@@ -15,11 +15,7 @@ def write():
 	gdspy.write_gds(filepath + "/" + filename, unit=1.0e-6, precision=1.0e-9)
 	print('gds file saved to "' + filepath + "/" + filename + '"')
 	print('PathCreator Finished!')
-
-def createRectangle(x,y):
-	poly = gdspy.Rectangle((position.x, position.y), (position.x+(x), position.y+(y)))
-	cell.add(poly)
-	return poly
+	
 
 def initPath(width):
 	path = gdspy.Path(width, (position.x, position.y))
