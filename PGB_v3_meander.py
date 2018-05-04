@@ -11,16 +11,20 @@ from Parameters import *
 
 print('Using gdspy module version ' + gdspy.__version__)
 
+def createPoly(position, x,y):
+	poly = gdspy.Rectangle((position.x, position.y), (position.move_x(x), position.move_y(y)))
+	return poly
+
 # %% function that adds Z low block
 def Zlow(position, l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-	Zlow1 = gdspy.Rectangle((position.x, position.y), (position.x + l_Zlow, position.y + t_Zlow))
-
-	return Zlow1
+	Zlow = createPoly(position, l_Zlow, t_Zlow)
+	position.move_y(-t_Zlow)
+	return Zlow
 
 
 # %%
 def Zhigh(position, l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
-	position.y = position.y + 0.5 * (t_Zlow - t_Zhigh)
+	position.y = position.y + (0.5 * (t_Zlow - t_Zhigh))
 	Zhigh = gdspy.Rectangle((position.x, position.y), (position.x + l_Zhigh, position.y + t_Zhigh))
 	position.x = position.x + l_Zhigh
 	position.y = position.y - 0.5 * (t_Zlow - t_Zhigh)
@@ -735,7 +739,7 @@ cell = bendRightZlow2(cursor, cell, l_Zhigh, l_Zlow, t_Zhigh, t_Zlow, R_inner_lo
 ## ------------------------------------------------------------------ ##
 ## Output the layout to a GDSII file (default to all created cells).
 ## Set the units we used to micrometers and the precision to nanometers.
-gdspy.gds_print(filepath + "/" + filename, unit=1.0e-6, precision=1.0e-9)
+gdspy.write_gds(filepath + "/" + filename, unit=1.0e-6, precision=1.0e-9)
 print('gds file saved to "' + filepath + "/" + filename + '"')
 
 ## ------------------------------------------------------------------ ##
