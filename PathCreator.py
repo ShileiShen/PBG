@@ -117,27 +117,76 @@ def resonator():
 
 	return cell
 
+
+
+def meander_draw(total_length, width, step, direction):
+	length = 0
+	if direction=='-x':
+		while position.x>min_side_offset+R:
+			createPoly(width, step, direction=direction)
+			length +=step
+		if length<total_length:
+			createArc(width, R, numpy.pi / 2.0, 3 * numpy.pi / 2)
+			length+=numpy.pi*R
+		if length<total_length:
+			direction='+x'
+			meander_draw(total_length-length, width, step, direction=direction)
+			#createPoly(width, total_length-length, direction='+x')
+
+	if direction=='+x':
+		while position.x < chip_width - min_side_offset - R:
+			createPoly(width, step, direction=direction)
+			length += step
+		if length<total_length:
+			createArc(width, -R, -numpy.pi / 2.0, -3 * numpy.pi / 2)
+			length += numpy.pi * R
+		if length < total_length:
+			#createPoly(width, total_length - length, direction='-x')
+			direction='-x'
+			meander_draw(total_length - length, width, step, direction=direction)
+	return direction
+
+
+def first_meander_draw(total_length, width, step, direction):
+	length = 0
+	if direction == '+x':
+		while position.x < chip_width - min_side_offset - R:
+			createPoly(width, step, direction=direction)
+			length += step
+		if length < total_length:
+			createArc(t_Zhigh, -R, -numpy.pi / 2.0, -numpy.pi)
+			length += numpy.pi * R/2
+		if length < total_length:
+			while position.y > chip_length/2-edge_offset-resonator_y_offset:
+				createPoly(width, step, direction='-y')
+				length += step
+		if length < total_length:
+			createArc(t_Zhigh, R, 0 * numpy.pi / 2.0, -numpy.pi / 2)
+			length += numpy.pi * R / 2
+		if length < total_length:
+			createPoly(t_Zhigh, total_length-length, direction='-x')
+
+
 #define chip
 position=Position.Position()
 cell = gdspy.Cell('PathCreator')
 createPoly(chip_length,chip_width)
 
+#draw a structure
 position=Position.Position(x=chip_width/2-l_res/2, y=chip_length/2-edge_offset)
 
 resonator()
 
-createPoly(t_Zhigh,l1)
-createArc(t_Zhigh, -R, -numpy.pi / 2.0, -numpy.pi)
-createPoly(t_Zhigh,l2, direction='-y')
-createArc(t_Zhigh, R, 0*numpy.pi/2.0, -numpy.pi/2)
-createPoly(t_Zhigh, l3, direction='-x')
+first_meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction='+x', step=step_polygon)
 
-createPoly(t_Zlow, l1_Zlow, direction='-x')
-createArc(t_Zlow, R, numpy.pi/2.0, 3*numpy.pi/2)
-createPoly(t_Zlow, l2_Zlow, direction='+x')
+direction_intial='-x'
+for i in range(3):
+	if i==0:
+		direction = meander_draw(total_length=l_Zlow,width=t_Zlow, direction=direction_intial, step=step_polygon)
+	else:
+		direction = meander_draw(total_length=l_Zlow, width=t_Zlow, direction=direction, step=step_polygon)
+	direction = meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction=direction, step=step_polygon)
 
-createPoly(t_Zhigh, -(l2_Zlow-l1_Zlow)+l3, direction='+x')
-createArc(t_Zhigh, -R, -numpy.pi / 2.0, -3*numpy.pi/2)
-createPoly(t_Zhigh, -(-(l2_Zlow-l1_Zlow)+l3) - numpy.pi*R+l_Zhigh, direction='-x')
-print(-(l2_Zlow-l1_Zlow)+l3)
+
+#meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction='-x', step=step_polygon)
 write()
