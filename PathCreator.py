@@ -8,9 +8,6 @@ from Parameters import *
 
 print('Using gdspy module version ' + gdspy.__version__)
 
-position=Position.Position()
-cell = gdspy.Cell('PathCreator')
-
 def write():
 	gdspy.write_gds(filepath + "/" + filename, unit=1.0e-6, precision=1.0e-9)
 	print('gds file saved to "' + filepath + "/" + filename + '"')
@@ -25,23 +22,38 @@ def createPoly(width, length, direction='+x'):
 	path=initPath(width)
 	path.segment(length, direction, **spec_path)
 	cell.add(path)
-	position.move_x(length)
+	if (direction=='+x'):
+		position.move_x(length)
+	elif (direction=='-x'):
+		position.move_x(-length)
+	elif(direction=='+y'):
+		position.move_y(length)
+	elif(direction=='-y'):
+		position.move_y((-length))
 
 def createArc(width, radius, angle1, angle2):
 	path = initPath(width)
 	path.arc(radius, angle1, angle2, **spec)
 	cell.add(path)
 	if abs(angle2-angle1)==numpy.pi:
-		if (angle2 < angle1):
-			position.move_y(-2 * radius)
-		if (angle2 > angle1):
-			position.move_y(2 * radius)
+		if (angle1<0):
+			if (angle2 < angle1):
+				position.move_y(-2 * abs(radius))
+			if (angle2 > angle1):
+				position.move_y(2 * abs(radius))
+		else:
+			position.move_y(-2 * abs(radius))
 	if abs(angle2 - angle1) == numpy.pi/2:
-		position.move_x(radius)
+		#position.move_x(abs(radius))
 		if (angle2<angle1):
-			position.move_y(-radius)
+			position.move_y(-abs(radius))
+			if (angle1<0):
+				position.move_x(abs(radius))
+			else:
+				position.move_x(-abs(radius))
 		if (angle2>angle1):
-			position.move_y(radius)
+			position.move_y(abs(radius))
+			position.move_x(abs(radius))
 
 
 def resonator():
@@ -105,9 +117,27 @@ def resonator():
 
 	return cell
 
+#define chip
+position=Position.Position()
+cell = gdspy.Cell('PathCreator')
+createPoly(chip_length,chip_width)
 
-createPoly(t_Zlow,l_Zlow)
-createArc(t_Zhigh, R_inner_high, -numpy.pi / 2.0, 0)
-createPoly(t_Zlow,l_Zlow)
+position=Position.Position(x=chip_width/2-l_res/2, y=chip_length/2-edge_offset)
+
 resonator()
+
+createPoly(t_Zhigh,l1)
+createArc(t_Zhigh, -R, -numpy.pi / 2.0, -numpy.pi)
+createPoly(t_Zhigh,l2, direction='-y')
+createArc(t_Zhigh, R, 0*numpy.pi/2.0, -numpy.pi/2)
+createPoly(t_Zhigh, l3, direction='-x')
+
+createPoly(t_Zlow, l1_Zlow, direction='-x')
+createArc(t_Zlow, R, numpy.pi/2.0, 3*numpy.pi/2)
+createPoly(t_Zlow, l2_Zlow, direction='+x')
+
+createPoly(t_Zhigh, -(l2_Zlow-l1_Zlow)+l3, direction='+x')
+createArc(t_Zhigh, -R, -numpy.pi / 2.0, -3*numpy.pi/2)
+createPoly(t_Zhigh, -(-(l2_Zlow-l1_Zlow)+l3) - numpy.pi*R+l_Zhigh, direction='-x')
+print(-(l2_Zlow-l1_Zlow)+l3)
 write()

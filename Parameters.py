@@ -1,7 +1,14 @@
-filename = '2umRes_L3mm_8cells_W20_MEANDER0.gds'
-# filepath = 'C:/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/2018'
-filepath = '/Users/mykhailo/Documents/UNSW/PBG'
+import numpy
+
+filename = '2umRes_L3mm_4cells_MEANDER0.gds'
+filepath = 'C:/Users/z5119993/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/Reflection'  #for Windows
+#filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 #Parameters ##  ALL UNITS IN MICRONS
+
+chip_length = 10000
+chip_width = 4000
+
+edge_offset=1000
 
 l_Zhigh = 3000
 t_Zhigh = 20
@@ -26,6 +33,11 @@ delta_x = 0  #offset for starting point of C fingers
 R_inner_low = 700 / 2 #radius for Round
 R_inner_high = 900 / 2
 R = 800/2 #radius for arc, const for low and high TL
+l1 = 800
+l1_Zlow=800+600
+l2 = 500
+l3=l_Zhigh-numpy.pi*R -l1 -l2
+l2_Zlow=l_Zlow-numpy.pi*R-l1_Zlow
 
 c_gap = 0 #coupling capacitor separation
 c_length = 0 #length of the polygon that has coupling capacitor
