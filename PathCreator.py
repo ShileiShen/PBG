@@ -12,7 +12,6 @@ def write():
 	gdspy.write_gds(filepath + "/" + filename, unit=1.0e-6, precision=1.0e-9)
 	print('gds file saved to "' + filepath + "/" + filename + '"')
 	print('PathCreator Finished!')
-	
 
 def initPath(width):
 	path = gdspy.Path(width, (position.x, position.y))
@@ -31,29 +30,15 @@ def createPoly(width, length, direction='+x'):
 	elif(direction=='-y'):
 		position.move_y((-length))
 
+
 def createArc(width, radius, angle1, angle2):
 	path = initPath(width)
 	path.arc(radius, angle1, angle2, **spec)
 	cell.add(path)
-	if abs(angle2-angle1)==numpy.pi:
-		if (angle1<0):
-			if (angle2 < angle1):
-				position.move_y(-2 * abs(radius))
-			if (angle2 > angle1):
-				position.move_y(2 * abs(radius))
-		else:
-			position.move_y(-2 * abs(radius))
-	if abs(angle2 - angle1) == numpy.pi/2:
-		#position.move_x(abs(radius))
-		if (angle2<angle1):
-			position.move_y(-abs(radius))
-			if (angle1<0):
-				position.move_x(abs(radius))
-			else:
-				position.move_x(-abs(radius))
-		if (angle2>angle1):
-			position.move_y(abs(radius))
-			position.move_x(abs(radius))
+	cx = position.x - radius * numpy.cos(angle1)
+	cy = position.y - radius * numpy.sin(angle1)
+	position.x = cx + radius * numpy.cos(angle2)
+	position.y = cy + radius * numpy.sin(angle2)
 
 
 def resonator():
@@ -117,34 +102,87 @@ def resonator():
 
 	return cell
 
+def poly_minus_x_draw(total_length, width, step):
+	while (position.x > min_side_offset + R) and (position.length < total_length):
+		createPoly(width, step, direction=position.direction)
+		position.length += step
 
 
-def meander_draw(total_length, width, step, direction):
-	length = 0
-	if direction=='-x':
-		while position.x>min_side_offset+R:
-			createPoly(width, step, direction=direction)
-			length +=step
-		if length<total_length:
-			createArc(width, R, numpy.pi / 2.0, 3 * numpy.pi / 2)
-			length+=numpy.pi*R
-		if length<total_length:
-			direction='+x'
-			meander_draw(total_length-length, width, step, direction=direction)
-			#createPoly(width, total_length-length, direction='+x')
+def poly_plus_x_draw(total_length, width, step):
+	while (position.x < chip_width - min_side_offset - R) and (position.length < total_length):
+		createPoly(width, step, direction=position.direction)
+		position.length += step
 
-	if direction=='+x':
-		while position.x < chip_width - min_side_offset - R:
-			createPoly(width, step, direction=direction)
-			length += step
-		if length<total_length:
-			createArc(width, -R, -numpy.pi / 2.0, -3 * numpy.pi / 2)
-			length += numpy.pi * R
-		if length < total_length:
-			#createPoly(width, total_length - length, direction='-x')
-			direction='-x'
-			meander_draw(total_length - length, width, step, direction=direction)
-	return direction
+
+def arc_minus_x_draw(d_angle, total_length, width ):
+
+	for n in range(round(numpy.pi / d_angle)):
+		if (position.length < total_length) and (position.angle < 3*numpy.pi/2):
+			createArc(width, R, position.angle, position.angle + d_angle)
+			position.length += d_angle * R
+			position.add_angle(d_angle)
+		else:
+			break
+
+	if (position.angle >= 3*numpy.pi/2):
+		position.change_direction()
+		position.arcContinue = False
+		position.angle = -numpy.pi/2
+	else:
+		position.arcContinue = True
+
+
+
+def arc_plus_x_draw(d_angle, total_length, width):
+
+	for n in range(round(numpy.pi / d_angle)):
+		if (position.length < total_length) and (position.angle>-3*numpy.pi/2):
+			createArc(width, -R, position.angle, position.angle - d_angle)
+			position.length += d_angle * R
+
+			position.add_angle(-d_angle)
+		else:
+			break
+
+	if (position.angle <= -3*numpy.pi/2):
+		position.change_direction()
+		position.arcContinue = False
+		position.angle = numpy.pi/2
+	else:
+		position.arcContinue = True
+
+
+
+def meander_draw(total_length, width, step):
+
+	if position.arcContinue==False:
+
+		if position.direction=='-x':
+			poly_minus_x_draw(total_length, width, step)
+			if position.length<total_length:
+				arc_minus_x_draw(d_angle, total_length, width)
+			if position.length<total_length:
+				meander_draw(total_length, width, step)
+
+		if position.direction=='+x':
+			poly_plus_x_draw(total_length, width, step)
+			if position.length<total_length:
+				arc_plus_x_draw(d_angle, total_length, width)
+			if position.length < total_length:
+				meander_draw(total_length, width, step)
+
+	else:
+		if position.angle<0:
+			arc_plus_x_draw(d_angle, total_length, width)
+		else:
+			arc_minus_x_draw(d_angle, total_length, width)
+		if position.length < total_length:
+			meander_draw(total_length, width, step)
+
+	print(str(position.length) + '/')
+
+
+
 
 
 def first_meander_draw(total_length, width, step, direction):
@@ -178,15 +216,18 @@ position=Position.Position(x=chip_width/2-l_res/2, y=chip_length/2-edge_offset)
 resonator()
 
 first_meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction='+x', step=step_polygon)
+position.change_direction()
 
-direction_intial='-x'
 for i in range(3):
-	if i==0:
-		direction = meander_draw(total_length=l_Zlow,width=t_Zlow, direction=direction_intial, step=step_polygon)
-	else:
-		direction = meander_draw(total_length=l_Zlow, width=t_Zlow, direction=direction, step=step_polygon)
-	direction = meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction=direction, step=step_polygon)
+	print('new')
+	position.length = 0
+	meander_draw(total_length=l_Zlow,width=t_Zlow, step=step_polygon)
+	position.length = 0
+	print('new')
+	meander_draw(total_length=l_Zhigh, width=t_Zhigh, step=step_polygon)
+	position.length = 0
 
 
-#meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction='-x', step=step_polygon)
+meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
+position.length = 0
 write()
