@@ -53,9 +53,9 @@ def resonator():
 
 	def addCfinger(x0, y0, positive):
 		if positive:
-			cFinger = gdspy.Rectangle((x0, y0), (x0 + w_c, y0 + h_c))
+			cFinger = gdspy.Rectangle((x0, y0), (x0 + w_c, y0 + h_c), **spec_res)
 		else:
-			cFinger = gdspy.Rectangle((x0, y0), (x0 + w_c, y0 - h_c))
+			cFinger = gdspy.Rectangle((x0, y0), (x0 + w_c, y0 - h_c), **spec_res)
 		cell.add(cFinger)
 
 	x_step = 2 * w_c + 2 * w_sep
@@ -69,8 +69,8 @@ def resonator():
 	gndRes_h = gap + t_Zlow / 2 - t_res / 2 - h_sep - h_c  # width of additional ground plane
 
 	gndRes_upper = gdspy.Rectangle((position.x, position.y + t_Zlow/2 + gap),
-	                               (position.x + l_res, position.y + t_Zlow/2 + gap - gndRes_h))
-	gndRes_bottom = gdspy.Rectangle((position.x, position.y - t_Zlow/2-gap), (position.x + l_res, position.y - t_Zlow/2-gap + gndRes_h))
+	                               (position.x + l_res, position.y + t_Zlow/2 + gap - gndRes_h), **spec_res)
+	gndRes_bottom = gdspy.Rectangle((position.x, position.y - t_Zlow/2-gap), (position.x + l_res, position.y - t_Zlow/2-gap + gndRes_h), **spec_res)
 	cell.add(gndRes_bottom)
 	cell.add(gndRes_upper)
 
@@ -87,13 +87,13 @@ def resonator():
 		y_var2 = y_var1 + h_c
 
 		# down_finger = CreatePath([(x_var1,y_var1),(x_var2,y_var2)],w_c,layer=0)
-		down_finger = gdspy.Rectangle((x_var1, y_var1), (x_var2, y_var2))
+		down_finger = gdspy.Rectangle((x_var1, y_var1), (x_var2, y_var2), **spec_res)
 
 		y_var1_up = y_start_up
 		y_var2_up = y_var1_up - h_c
 
 		# up_finger = CreatePath([(x_var1,y_var1_up),(x_var2,y_var2_up)],w_c,layer=0)
-		up_finger = gdspy.Rectangle((x_var1, y_var1_up), (x_var2, y_var2_up))
+		up_finger = gdspy.Rectangle((x_var1, y_var1_up), (x_var2, y_var2_up), **spec_res)
 
 		cell.add(down_finger)
 		cell.add(up_finger)
@@ -117,7 +117,7 @@ def poly_plus_x_draw(total_length, width, step):
 def arc_minus_x_draw(d_angle, total_length, width ):
 
 	for n in range(round(numpy.pi / d_angle)):
-		if (position.length < total_length) and (position.angle < 3*numpy.pi/2):
+		if (position.length < total_length) and (position.angle <= 3*numpy.pi/2):
 			createArc(width, R, position.angle, position.angle + d_angle)
 			position.length += d_angle * R
 			position.add_angle(d_angle)
@@ -125,6 +125,7 @@ def arc_minus_x_draw(d_angle, total_length, width ):
 			break
 
 	if (position.angle >= 3*numpy.pi/2):
+		#createArc(width, R, position.angle, position.angle + d_angle)
 		position.change_direction()
 		position.arcContinue = False
 		position.angle = -numpy.pi/2
@@ -136,15 +137,15 @@ def arc_minus_x_draw(d_angle, total_length, width ):
 def arc_plus_x_draw(d_angle, total_length, width):
 
 	for n in range(round(numpy.pi / d_angle)):
-		if (position.length < total_length) and (position.angle>-3*numpy.pi/2):
+		if (position.length < total_length) and (position.angle >= -3*numpy.pi/2):
 			createArc(width, -R, position.angle, position.angle - d_angle)
 			position.length += d_angle * R
-
 			position.add_angle(-d_angle)
 		else:
 			break
 
 	if (position.angle <= -3*numpy.pi/2):
+		#createArc(width, -R, position.angle, position.angle - d_angle)
 		position.change_direction()
 		position.arcContinue = False
 		position.angle = numpy.pi/2
@@ -205,10 +206,10 @@ def first_meander_draw(total_length, width, step, direction):
 			createPoly(t_Zhigh, total_length-length, direction='-x')
 
 
-#define chip
-position=Position.Position()
 cell = gdspy.Cell('PathCreator')
-createPoly(chip_length,chip_width)
+#define chip
+# position=Position.Position()
+# createPoly(chip_length,chip_width)
 
 #draw a structure
 position=Position.Position(x=chip_width/2-l_res/2, y=chip_length/2-edge_offset)
