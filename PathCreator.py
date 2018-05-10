@@ -285,33 +285,33 @@ cell = gdspy.Cell('PathCreator')
 position=Position.Position()
 createPoly(chip_length,chip_width)
 
-#draw a structure
-position=Position.Position(x=chip_width/2-l_res/2, y=chip_length/2-edge_offset)
-
-resonator()
-
-first_meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction='+x', step=step_polygon)
-position.change_direction()
-
-for i in range(3):
-	print('new')
-	position.length = 0
-	meander_draw(total_length=l_Zlow,width=t_Zlow, step=step_polygon)
-	position.length = 0
-	print('new')
-	meander_draw(total_length=l_Zhigh, width=t_Zhigh, step=step_polygon)
-	position.length = 0
-
-
-#meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
-position.length = 0
-last_meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
-position.length = 0
-
-createPoly(width=t_Zlow, length=l_taper, direction='-y', final_width=t_final)
-
-l_final = chip_length/2 - abs(position.y)
-createPoly(width=t_final, length=l_final, direction='-y')
+# #draw a structure
+# position=Position.Position(x=chip_width/2-l_res/2, y=chip_length/2-edge_offset)
+#
+# resonator()
+#
+# first_meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction='+x', step=step_polygon)
+# position.change_direction()
+#
+# for i in range(3):
+# 	print('new')
+# 	position.length = 0
+# 	meander_draw(total_length=l_Zlow,width=t_Zlow, step=step_polygon)
+# 	position.length = 0
+# 	print('new')
+# 	meander_draw(total_length=l_Zhigh, width=t_Zhigh, step=step_polygon)
+# 	position.length = 0
+#
+#
+# #meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
+# position.length = 0
+# last_meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
+# position.length = 0
+#
+# createPoly(width=t_Zlow, length=l_taper, direction='-y', final_width=t_final)
+#
+# l_final = chip_length/2 - abs(position.y)
+# createPoly(width=t_final, length=l_final, direction='-y')
 
 write()
 
