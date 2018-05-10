@@ -17,9 +17,9 @@ def initPath(width):
 	path = gdspy.Path(width, (position.x, position.y))
 	return path
 
-def createPoly(width, length, direction='+x'):
+def createPoly(width, length, direction='+x', final_width=None):
 	path=initPath(width)
-	path.segment(length, direction, **spec_path)
+	path.segment(length, direction, final_width=final_width, **spec_path)
 	cell.add(path)
 	if (direction=='+x'):
 		position.move_x(length)
@@ -102,17 +102,17 @@ def resonator():
 
 	return cell
 
-def poly_minus_x_draw(total_length, width, step):
-	while (position.x > min_side_offset + R) and (position.length < total_length):
+
+def poly_minus_x_draw(total_length, width, step, side_offset = min_side_offset):
+	while (position.x > side_offset + R) and (position.length < total_length):
 		createPoly(width, step, direction=position.direction)
 		position.length += step
 
 
-def poly_plus_x_draw(total_length, width, step):
-	while (position.x < chip_width - min_side_offset - R) and (position.length < total_length):
+def poly_plus_x_draw(total_length, width, step, side_offset = min_side_offset):
+	while (position.x < chip_width - side_offset - R) and (position.length < total_length):
 		createPoly(width, step, direction=position.direction)
 		position.length += step
-
 
 def arc_minus_x_draw(d_angle, total_length, width ):
 
@@ -125,13 +125,29 @@ def arc_minus_x_draw(d_angle, total_length, width ):
 			break
 
 	if (position.angle >= 3*numpy.pi/2):
-		#createArc(width, R, position.angle, position.angle + d_angle)
 		position.change_direction()
 		position.arcContinue = False
 		position.angle = -numpy.pi/2
 	else:
 		position.arcContinue = True
 
+
+def arc_half_minus_x_draw(d_angle, total_length, width):
+
+	for n in range(round((numpy.pi/2) / d_angle)):
+		if (position.length < total_length) and (position.angle <= numpy.pi):
+			createArc(width, R, position.angle, position.angle + d_angle)
+			position.length += d_angle * R
+			position.add_angle(d_angle)
+		else:
+			break
+
+	if (position.angle >= numpy.pi):
+		position.change_direction()
+		position.arcContinue = False
+		position.angle = -numpy.pi/2
+	else:
+		position.arcContinue = True
 
 
 def arc_plus_x_draw(d_angle, total_length, width):
@@ -145,13 +161,29 @@ def arc_plus_x_draw(d_angle, total_length, width):
 			break
 
 	if (position.angle <= -3*numpy.pi/2):
-		#createArc(width, -R, position.angle, position.angle - d_angle)
 		position.change_direction()
 		position.arcContinue = False
 		position.angle = numpy.pi/2
 	else:
 		position.arcContinue = True
 
+
+def arc_half_plus_x_draw(d_angle, total_length, width):
+
+	for n in range(round((numpy.pi/2) / d_angle)):
+		if (position.length < total_length) and (position.angle >= -3*numpy.pi/2):
+			createArc(width, -R, position.angle, position.angle - d_angle)
+			position.length += d_angle * R
+			position.add_angle(-d_angle)
+		else:
+			break
+
+	if (position.angle <= -3*numpy.pi/2):
+		position.change_direction()
+		position.arcContinue = False
+		position.angle = numpy.pi/2
+	else:
+		position.arcContinue = True
 
 
 def meander_draw(total_length, width, step):
@@ -186,6 +218,48 @@ def meander_draw(total_length, width, step):
 
 
 
+def last_meander_draw(total_length, width, step):
+	if position.arcContinue==False:
+
+		if position.direction=='-x':
+			poly_minus_x_draw(total_length, width, step, last_meander_side_offset)
+			if position.length<total_length:
+				arc_half_minus_x_draw(d_angle, total_length, width)
+			if position.length<total_length:
+				#meander_draw(total_length, width, step)
+				position.direction='-y'
+				while (position.length < total_length):
+					createPoly(width, step, direction=position.direction)
+					position.length += step
+
+
+		if position.direction=='+x':
+			poly_plus_x_draw(total_length, width, step, last_meander_side_offset)
+			if position.length<total_length:
+				arc_half_plus_x_draw(d_angle, total_length, width)
+			if position.length < total_length:
+				#meander_draw(total_length, width, step)
+				position.direction = '-y'
+				while (position.length < total_length):
+					createPoly(width, step, direction=position.direction)
+					position.length += step
+
+	else:
+		if position.angle<0:
+			arc_half_plus_x_draw(d_angle, total_length, width)
+		else:
+			arc_half_minus_x_draw(d_angle, total_length, width)
+		if position.length < total_length:
+			last_meander_draw(total_length, width, step)
+
+
+	print(str(position.length) + '/')
+
+
+
+
+
+
 def first_meander_draw(total_length, width, step, direction):
 	length = 0
 	if direction == '+x':
@@ -208,8 +282,8 @@ def first_meander_draw(total_length, width, step, direction):
 
 cell = gdspy.Cell('PathCreator')
 #define chip
-# position=Position.Position()
-# createPoly(chip_length,chip_width)
+position=Position.Position()
+createPoly(chip_length,chip_width)
 
 #draw a structure
 position=Position.Position(x=chip_width/2-l_res/2, y=chip_length/2-edge_offset)
@@ -229,6 +303,16 @@ for i in range(3):
 	position.length = 0
 
 
-meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
+#meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
 position.length = 0
+last_meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
+position.length = 0
+
+createPoly(width=t_Zlow, length=l_taper, direction='-y', final_width=t_final)
+
+l_final = chip_length/2 - abs(position.y)
+createPoly(width=t_final, length=l_final, direction='-y')
+
 write()
+
+
