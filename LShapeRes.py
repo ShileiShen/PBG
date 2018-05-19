@@ -9,7 +9,7 @@ print('Using gdspy module version ' + gdspy.__version__)
 #%%
 ## Parameters ##  ALL UNITS IN MICRONS
 
-filename = 'path_L1.gds'
+filename = 'gnd_L1.gds'
 #filepath = 'C:/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/2018'
 filepath='/Users/mykhailo/Documents/UNSW/PBG'
 
@@ -78,16 +78,17 @@ cell = gdspy.Cell('PathCreator')
 position=Position.Position()
 createPoly(chip_length,chip_width)
 
-position=Position.Position()
-
-position.move_y(chip_length/2-min_top_offset)
-position.move_x(min_side_offset)
-#createPoly(t_res, l_res, direction='+x', final_width=None)
-
-
-first_meander_draw(total_length=l_res, width=t_res, step=10, direction='+x', R=450)
-position.move_y(-c_gap)
-createPoly(t_res, chip_length/2+position.y, direction='-y', final_width=None)
+#define path
+# position=Position.Position()
+#
+# position.move_y(chip_length/2-min_top_offset)
+# position.move_x(min_side_offset)
+# #createPoly(t_res, l_res, direction='+x', final_width=None)
+#
+#
+# first_meander_draw(total_length=l_res, width=t_res+2*gap_res, step=10, direction='+x', R=450)
+# position.move_y(-c_gap)
+# createPoly(t_res+2*gap_res, chip_length/2+position.y, direction='-y', final_width=None)
 write()
 
 
