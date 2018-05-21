@@ -9,13 +9,13 @@ print('Using gdspy module version ' + gdspy.__version__)
 #%%
 ## Parameters ##  ALL UNITS IN MICRONS
 
-filename = 'path_L3.gds'
+filename = 'inner_path_L5.gds'
 filepath = 'C:/Users/z5119993/Dropbox/PGB/Reflection'
 #filepath='/Users/mykhailo/Documents/UNSW/PBG'
 
 chip_length=10000
 chip_width=4000
-l_res=3930   #length of lambda/2 resonator at 7.3 GHz
+l_res=3916   #length of lambda/2 resonator at 7.3 GHz
 t_res=100 #width of the resonator
 gap_res=75 #resonator gap for Lk=0
 spec_path = {'layer': 1, 'datatype': 1} #standard specifications for Path polygon
