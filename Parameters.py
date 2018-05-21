@@ -1,6 +1,6 @@
 import numpy
 
-filename = '2umRes_L3mm_4cells_MEANDER_gnd_v1.gds'
+filename = '2umRes_L3mm_4cells_MEANDER_v2.gds'
 filepath = 'C:/Users/z5119993/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/Reflection'  #for Windows
 #filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 #Parameters ##  ALL UNITS IN MICRONS
@@ -55,8 +55,8 @@ l_final=200 #length of the polygon after it was tapered, will be parametrised ac
 
 #comment it out if not creating gnd plane
 #homogenous for the gap CPW
-t_homogeneous=250
-t_final=t_final+2*gap_final
-t_Zlow = t_homogeneous
-t_Zhigh = t_homogeneous
-t_res = t_homogeneous
+# t_homogeneous=250
+# t_final=t_final+2*gap_final
+# t_Zlow = t_homogeneous
+# t_Zhigh = t_homogeneous
+# t_res = t_homogeneous
