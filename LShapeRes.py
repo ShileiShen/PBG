@@ -9,13 +9,13 @@ print('Using gdspy module version ' + gdspy.__version__)
 #%%
 ## Parameters ##  ALL UNITS IN MICRONS
 
-filename = 'outer_path_L7_left.gds'
+filename = 'inner_path_L8.gds'
 filepath = 'C:/Users/z5119993/Dropbox/PGB/Reflection'
 #filepath='/Users/mykhailo/Documents/UNSW/PBG'
 
 chip_length=10000
 chip_width=4000
-l_res=3920   #length of lambda/2 resonator at 7.3 GHz
+l_res=3945   #length of lambda/2 resonator at 7.3 GHz
 t_res=100 #width of the resonator
 gap_res=75 #resonator gap for Lk=0
 spec_path = {'layer': 1, 'datatype': 1} #standard specifications for Path polygon
@@ -89,31 +89,31 @@ cell = gdspy.Cell('PathCreator')
 # createPoly(chip_length,chip_width)
 
 #define path
-# position=Position.Position()
-#
-# position.move_y(chip_length/2-min_top_offset)
-# position.move_x(min_side_offset)
-#
-# #width_res=t_res+2*gap_res
-# width_res=t_res
-#
-# first_meander_draw(total_length=l_res, width=width_res, step=10, direction='+x', R=450)
-# position.move_y(-c_gap)
-# createPoly(width_res, chip_length/2+position.y, direction='-y', final_width=None)
-# write()
+position=Position.Position()
+
+position.move_y(chip_length/2-min_top_offset)
+position.move_x(min_side_offset)
+
+#width_res=t_res+2*gap_res
+width_res=t_res
+
+first_meander_draw(total_length=l_res, width=width_res, step=10, direction='+x', R=450)
+position.move_y(-c_gap)
+createPoly(width_res, chip_length/2+position.y, direction='-y', final_width=None)
+write()
 ####################################################
 
 #draw in -x direction
 
 #define path
-position=Position.Position()
-
-position.move_y(chip_length/2-min_top_offset)
-position.move_x(chip_width-min_side_offset)
-width_res=t_res+2*gap_res
-#width_res=t_res
-
-first_meander_draw(total_length=l_res, width=width_res, step=10, direction='-x', R=450)
-#position.move_y(-c_gap)
-createPoly(width_res, chip_length/2+position.y, direction='-y', final_width=None)
-write()
+# position=Position.Position()
+#
+# position.move_y(chip_length/2-min_top_offset)
+# position.move_x(chip_width-min_side_offset)
+# width_res=t_res+2*gap_res
+# #width_res=t_res
+#
+# first_meander_draw(total_length=l_res, width=width_res, step=10, direction='-x', R=450)
+# #position.move_y(-c_gap)
+# createPoly(width_res, chip_length/2+position.y, direction='-y', final_width=None)
+# write()
