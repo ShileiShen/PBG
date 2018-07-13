@@ -281,11 +281,11 @@ def first_meander_draw(total_length, width, step, direction):
 
 
 cell = gdspy.Cell('PathCreator')
-#define chip
+# #define chip
 # position=Position.Position()
 # createPoly(chip_length,chip_width)
 
-# #draw a structure
+# # #draw a structure
 position=Position.Position(x=chip_width/2-l_res/2, y=chip_length/2-edge_offset)
 
 resonator()
@@ -293,7 +293,7 @@ resonator()
 first_meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction='+x', step=step_polygon)
 position.change_direction()
 
-for i in range(3):
+for i in range(1):
 	print('new')
 	position.length = 0
 	meander_draw(total_length=l_Zlow,width=t_Zlow, step=step_polygon)

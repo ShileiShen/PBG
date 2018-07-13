@@ -1,12 +1,12 @@
 import numpy
 
-filename = '2umRes_L3mm_4cells_MEANDER_v2.gds'
+filename = '2umRes_L3mm_4cells_MEANDER_v3_GND.gds'
 filepath = 'C:/Users/z5119993/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/Reflection'  #for Windows
 #filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 #Parameters ##  ALL UNITS IN MICRONS
 
 chip_length = 10000
-chip_width = 4000
+chip_width = 3000
 
 l_Zhigh = 3000
 t_Zhigh = 20
@@ -14,13 +14,13 @@ t_Zhigh = 20
 l_Zlow = 3000
 t_Zlow = 242
 
-l_res = 788/2  #length of lambda/2 resonator at 7.3 GHz
+l_res = 788/2 -6 #length of lambda/2 resonator at 7.3 GHz
 t_res = 2  #width of the resonator
 
 gap = 4  #gap between the Zlow and the ground plane
 w_gnd = 300  #width of the single ground plane for CPW structure
 
-number = 4  #number of Zlow-Zhigh cascades from each side of the resonator in case of transimission line
+number = 3  #number of Zlow-Zhigh cascades from each side of the resonator in case of transimission line
 
 w_c = 4  #C finger width
 h_c = 100  #C finger height
@@ -55,8 +55,8 @@ l_final=200 #length of the polygon after it was tapered, will be parametrised ac
 
 #comment it out if not creating gnd plane
 #homogenous for the gap CPW
-# t_homogeneous=250
-# t_final=t_final+2*gap_final
-# t_Zlow = t_homogeneous
-# t_Zhigh = t_homogeneous
-# t_res = t_homogeneous
+t_homogeneous=250
+t_final=t_final+2*gap_final
+t_Zlow = t_homogeneous
+t_Zhigh = t_homogeneous
+t_res = t_homogeneous
