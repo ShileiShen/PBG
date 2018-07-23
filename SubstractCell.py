@@ -480,7 +480,7 @@ def bendRightZlow2(position,cell,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow):
 #%%
 
 cell=gdspy.Cell('PGB_frame')
-cursor=Position.Position()
+cursor= Position.Position()
 
 
 #cell.add(pgb.Zlow(cursor,l_Zhigh, l_Zlow, t_Zhigh, t_Zlow))

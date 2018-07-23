@@ -6,7 +6,6 @@ Created on Wed Mar 21 16:40:49 2018
 """
 
 import gdspy
-import Position
 import numpy
 #import scipy.constants as scc
 

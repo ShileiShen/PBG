@@ -8,6 +8,7 @@ from Parameters import *
 
 print('Using gdspy module version ' + gdspy.__version__)
 
+#fuction that writes the created structure to gds file
 def write():
 	gdspy.write_gds(filepath + "/" + filename, unit=1.0e-6, precision=1.0e-9)
 	print('gds file saved to "' + filepath + "/" + filename + '"')
@@ -40,7 +41,7 @@ def createArc(width, radius, angle1, angle2):
 	position.x = cx + radius * numpy.cos(angle2)
 	position.y = cy + radius * numpy.sin(angle2)
 
-
+#building IDC resonator
 def resonator():
 	createPoly(t_res,l_res, spec_path=spec_res)
 	##%% Adding C fingers to the resonator
@@ -185,7 +186,7 @@ def arc_half_plus_x_draw(d_angle, total_length, width):
 	else:
 		position.arcContinue = True
 
-
+#The main function that creates meanders
 def meander_draw(total_length, width, step):
 
 	if position.arcContinue==False:
@@ -217,7 +218,7 @@ def meander_draw(total_length, width, step):
 
 
 
-
+#Overwritten meander_draw function to meet requirements for the last meander
 def last_meander_draw(total_length, width, step):
 	if position.arcContinue==False:
 
@@ -259,7 +260,7 @@ def last_meander_draw(total_length, width, step):
 
 
 
-
+#Overwritten meander_draw function to meet requirements for the first meander
 def first_meander_draw(total_length, width, step, direction):
 	length = 0
 	if direction == '+x':
@@ -280,22 +281,27 @@ def first_meander_draw(total_length, width, step, direction):
 			createPoly(t_Zhigh, total_length-length, direction='-x')
 
 
+#END of FUNCTION definitions
+###################################################################################
+#Constracting the actual design by using function defined above
+
+
 cell = gdspy.Cell('PathCreator')
 # #define chip
 # position=Position.Position()
 # createPoly(chip_length,chip_width)
 
 # # #draw a structure
-position=Position.Position(x=chip_width/2-l_res/2, y=chip_length/2-edge_offset)
+position= Position.Position(x=chip_width / 2 - l_res / 2, y=chip_length / 2 - edge_offset)
 
 resonator()
 
 first_meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction='+x', step=step_polygon)
 position.change_direction()
 
-for i in range(1):
+for i in range(1): #number of repetitions
 	print('new')
-	position.length = 0
+	position.length = 0 #before building new TL, the initial length should be set to zero
 	meander_draw(total_length=l_Zlow,width=t_Zlow, step=step_polygon)
 	position.length = 0
 	print('new')
@@ -308,11 +314,11 @@ position.length = 0
 last_meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
 position.length = 0
 
-createPoly(width=t_Zlow, length=l_taper, direction='-y', final_width=t_final)
+createPoly(width=t_Zlow, length=l_taper, direction='-y', final_width=t_final)  #tapering at the end
 
 l_final = chip_length/2 - abs(position.y)
 createPoly(width=t_final, length=l_final, direction='-y')
 
-write()
+write()  #writing the final structure to gds file
 
 
