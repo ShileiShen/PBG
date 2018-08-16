@@ -9,3 +9,6 @@ Run.py
 __pycache__/Parameters.cpython-35.pyc
 Parameters.py
 PathCreator.py
+*.pyc
+*.pyc
+*.pyc

@@ -3,6 +3,7 @@ import numpy
 filename = '2umRes_L3mm_4cells_MEANDER_TEST.gds'
 filepath = 'C:/Users/z5119993/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/Reflection'  #for Windows
 #filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
+
 #Parameters ##  ALL UNITS IN MICRONS
 
 chip_length = 11000
@@ -20,7 +21,7 @@ t_res = 2  #width of the resonator
 gap = 4  #gap between the Zlow and the ground plane
 w_gnd = 300  #width of the single ground plane for CPW structure
 
-number = 3  #number of Zlow-Zhigh cascades from each side of the resonator in case of transimission line
+number = 3  #number of Zlow-Zhigh cascades from each side of the resonator in case of transimission line (NOT USED)
 
 w_c = 4  #C finger width
 h_c = 100  #C finger height

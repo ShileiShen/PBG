@@ -93,7 +93,7 @@ cell = gdspy.Cell('PathCreator')
 # createPoly(chip_length,chip_width)
 
 #define path
-position=Position.Position()
+position= Position.Position()
 
 position.move_y(chip_length/2-min_top_offset)
 position.move_x(min_side_offset)
