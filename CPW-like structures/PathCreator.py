@@ -36,7 +36,6 @@ def createPoly(width, length, direction='+x', final_width=None, spec_path=spec_p
 
 
 def createArc(width, radius, angle1, angle2):
-
     path = initPath(width)
     path.arc(radius, angle1, angle2, **spec)
     cell.add(path)
@@ -110,7 +109,6 @@ def arc_half_minus_x_draw(d_angle, total_length, width):
 
 
 def arc_plus_x_draw(d_angle, total_length, width):
-
     for n in range(int(round(numpy.pi / d_angle))):
         if (position.length < total_length) and (position.angle >= -3 * numpy.pi / 2):
             end_angle = position.angle - d_angle
@@ -128,7 +126,6 @@ def arc_plus_x_draw(d_angle, total_length, width):
         position.angle = numpy.pi / 2
     else:
         position.arcContinue = True
-
 
 
 def arc_half_plus_x_draw(d_angle, total_length, width):
@@ -189,7 +186,7 @@ def last_meander_draw(width, step):
                 position.change_direction()
                 poly_plus_x_draw(length_to_draw, width, step, side_offset=last_meander_side_offset)
 
-                arc_half_plus_x_draw(d_angle,length_to_draw, width)
+                arc_half_plus_x_draw(d_angle, length_to_draw, width)
 
             else:
                 length_to_draw = (position.x - last_meander_side_offset) + numpy.pi * R / 2
@@ -204,7 +201,7 @@ def last_meander_draw(width, step):
                 position.change_direction()
                 poly_minus_x_draw(length_to_draw, width, step, side_offset=last_meander_side_offset)
 
-                arc_half_minus_x_draw(d_angle,length_to_draw, width)
+                arc_half_minus_x_draw(d_angle, length_to_draw, width)
 
             else:
                 length_to_draw = (last_meander_side_offset - position.x) + numpy.pi * R / 2
@@ -219,7 +216,7 @@ def last_meander_draw(width, step):
 
     final_length = 0
     position.direction = '-y'
-    while (final_length < (step*10)):
+    while (final_length < (step * 10)):
         createPoly(width, step, direction=position.direction)
         final_length += step
 
@@ -250,12 +247,10 @@ def first_meander_draw(total_length, width, step, direction):
 
 
 def taper(initial_width, final_width, length, direction, step=step_polygon):
-
-    a = (1/float(length)) * numpy.log(final_width/float(initial_width))
+    a = (1 / float(length)) * numpy.log(final_width / float(initial_width))
 
     previous_width = initial_width
     for i in range(step, length, step):
-
         width = initial_width * numpy.exp(a * float(i))
         # print("Taper - i is %f \n\t a is %f \n\t exp is %f \n\t width is %f" % (i, a, numpy.exp(a * i), width))
 
@@ -276,7 +271,7 @@ cell = gdspy.Cell('PathCreator')
 # createPoly(chip_length,chip_width)
 
 # # #draw a structure
-position = Position.Position(x=chip_width / 2, y=chip_length / 2 - edge_offset, angle=-numpy.pi/2)
+position = Position.Position(x=chip_width / 2, y=chip_length / 2 - edge_offset, angle=-numpy.pi / 2)
 
 createPoly(width=t_final, length=l_final, direction='-y')
 taper(initial_width=t_final, final_width=t_Zhigh, length=l_taper, direction='-y', step=step_polygon)  # tapering
@@ -287,7 +282,7 @@ position.direction = '+x'
 meander_draw(total_length=l_Zhigh_edge, width=t_Zhigh, step=step_polygon)
 
 for i in range(number):  # number of repetitions
-    print("Iteration %d" % (i+1))
+    print("Iteration %d" % (i + 1))
     position.length = 0  # before building new TL, the initial length should be set to zero
     meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
     position.length = 0
@@ -297,17 +292,15 @@ for i in range(number):  # number of repetitions
     position.length = 0
     meander_draw(total_length=l_Zhigh, width=t_Zhigh, step=step_polygon)
     position.length = 0
-position.length = 0
-last_meander_draw(width=t_Zhigh, step=step_polygon)
-position.length = 0
     meander_draw(total_length=l_Zlow_short, width=t_Zlow, step=step_polygon)
     position.length = 0
     meander_draw(total_length=l_Zhigh, width=t_Zhigh, step=step_polygon)
     position.length = 0
 
 # meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
+last_meander_draw(t_Zhigh, step_polygon)
 
-taper(initial_width=t_Zhigh, final_width=t_final, length=l_taper, direction='-y', step=step_polygon)# tapering
+taper(initial_width=t_Zhigh, final_width=t_final, length=l_taper, direction='-y', step=step_polygon)  # tapering
 
 l_final = chip_length / 2 - abs(position.y)
 createPoly(width=t_final, length=l_final, direction='-y')

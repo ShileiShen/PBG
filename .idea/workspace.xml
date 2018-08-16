@@ -21,8 +21,8 @@
       <file leaf-file-name="Parameters.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CPW-like structures/Parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="38" column="58" selection-start-line="38" selection-start-column="58" selection-end-line="38" selection-end-column="58" />
+            <state relative-caret-position="459">
+              <caret line="27" column="12" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -30,8 +30,8 @@
       <file leaf-file-name="PathCreator.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CPW-like structures/PathCreator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="300" column="51" lean-forward="true" selection-start-line="300" selection-start-column="51" selection-end-line="300" selection-end-column="51" />
+            <state relative-caret-position="4821">
+              <caret line="301" selection-start-line="301" selection-end-line="301" />
               <folding>
                 <element signature="e#36#48#0" expanded="true" />
                 <element signature="e#236#411#0" />
@@ -82,8 +82,8 @@
         <option value="$PROJECT_DIR$/Parameters.py" />
         <option value="$PROJECT_DIR$/PathCreator.py" />
         <option value="$PROJECT_DIR$/CPW-like structures/Position.py" />
-        <option value="$PROJECT_DIR$/CPW-like structures/Parameters.py" />
         <option value="$PROJECT_DIR$/CPW-like structures/PathCreator.py" />
+        <option value="$PROJECT_DIR$/CPW-like structures/Parameters.py" />
       </list>
     </option>
   </component>
@@ -139,8 +139,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="segment&#9;null&#9;null" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Original PBG/PBG" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/GitHubDesktop/app-1.3.3/resources/app/git/cmd/git.exe" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -294,14 +294,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-5" y="-5" width="1376" height="1004" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18008785" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49757114" weight="0.32899022" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.43095073" side_tool="true" weight="0.29986963" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Python Console" order="8" sideWeight="0.49508426" weight="0.31812257" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5690493" visible="true" weight="0.23017621" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5690493" weight="0.23017621" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24973656" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49757114" weight="0.3285528" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -653,6 +652,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CPW-like structures/Parameters.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="12" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CPW-like structures/Position.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -660,17 +666,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CPW-like structures/Parameters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="58" selection-start-line="38" selection-start-column="58" selection-end-line="38" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CPW-like structures/PathCreator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="300" column="51" lean-forward="true" selection-start-line="300" selection-start-column="51" selection-end-line="300" selection-end-column="51" />
+        <state relative-caret-position="4821">
+          <caret line="301" selection-start-line="301" selection-end-line="301" />
           <folding>
             <element signature="e#36#48#0" expanded="true" />
             <element signature="e#236#411#0" />
