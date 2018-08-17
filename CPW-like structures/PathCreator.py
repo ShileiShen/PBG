@@ -227,6 +227,7 @@ def last_meander_draw(width, step):
 
 # Overwritten meander_draw function to meet requirements for the first meander
 def first_meander_draw(total_length, width, step, direction):
+
     length = 0
     if direction == '+x':
         while position.x < chip_width - min_side_offset - R:
@@ -263,6 +264,10 @@ def taper(initial_width, final_width, length, direction, step=step_polygon):
 # END of FUNCTION definitions
 ###################################################################################
 # Constracting the actual design by using function defined above
+
+
+
+
 
 
 cell = gdspy.Cell('PathCreator')

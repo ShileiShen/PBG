@@ -1,16 +1,21 @@
 import numpy
 
+
 filename = 'layout_20nm_inner.gds'
 filepath = 'C:/Users/Shanush/OneDrive - UNSW/Masters Thesis/Vissers Design'  # for Windows
 # filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 
+
 # Parameters ##  ALL UNITS IN MICRONS
+
 
 chip_length = 40000
 chip_width = 20000
 
+
 R_inner_low = 700 / 2  # radius for Round
 R_inner_high = 900 / 2
+
 R = 100  # radius for arc, const for low and high TL
 d_angle = numpy.pi / 620  # arc builder step
 
@@ -59,3 +64,4 @@ l_final = 600  # length of the polygon after it was tapered, will be parametrise
 # t_Zlow = t_Zlow + gap
 # t_Zhigh = t_Zhigh + gap
 # l_Zhigh_edge = l_Zhigh
+
