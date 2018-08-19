@@ -1,13 +1,13 @@
 import numpy
 
-filename = '2umRes_L3mm_4cells_MEANDER_TEST.gds'
-filepath = 'C:/Users/z5119993/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/Reflection'  #for Windows
-#filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
+filename = '2um420Res_L3mm_4cells_11x4chip_20W_242W.gds'
+#filepath = 'C:/Users/z5119993/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/Reflection'  #for Windows
+filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 
 #Parameters ##  ALL UNITS IN MICRONS
 
 chip_length = 11000
-chip_width = 5000
+chip_width = 4000
 
 l_Zhigh = 3000
 t_Zhigh = 20
@@ -15,7 +15,7 @@ t_Zhigh = 20
 l_Zlow = 3000
 t_Zlow = 242
 
-l_res = 788/2 -6 #length of lambda/2 resonator at 7.3 GHz
+l_res = 420 #length of lambda/2 resonator at 7.3 GHz
 t_res = 2  #width of the resonator
 
 gap = 4  #gap between the Zlow and the ground plane

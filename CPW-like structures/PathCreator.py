@@ -281,12 +281,10 @@ def first_meander_draw(total_length, width, step, direction):
 			createPoly(t_Zhigh, total_length-length, direction='-x')
 
 
-<<<<<<< HEAD:PathCreator.py
-=======
+
 #END of FUNCTION definitions
 ###################################################################################
 #Constracting the actual design by using function defined above
->>>>>>> 8137802c867fed9df2c5e0b4cac602b76abe3257:CPW-like structures/PathCreator.py
 
 
 cell = gdspy.Cell('PathCreator')
@@ -302,7 +300,7 @@ resonator()
 first_meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction='+x', step=step_polygon)
 position.change_direction()
 
-for i in range(1): #number of repetitions
+for i in range(number): #number of repetitions
 	print('new')
 	position.length = 0 #before building new TL, the initial length should be set to zero
 	meander_draw(total_length=l_Zlow,width=t_Zlow, step=step_polygon)
