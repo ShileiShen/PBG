@@ -280,6 +280,16 @@ def first_meander_draw(total_length, width, step, direction):
 		if length < total_length:
 			createPoly(t_Zhigh, total_length-length, direction='-x')
 
+def taper(initial_width, final_width, length, direction, step=step_polygon):
+    a = (1 / float(length)) * numpy.log(final_width / float(initial_width))
+
+    previous_width = initial_width
+    for i in range(step, length, step):
+        width = initial_width * numpy.exp(a * float(i))
+        # print("Taper - i is %f \n\t a is %f \n\t exp is %f \n\t width is %f" % (i, a, numpy.exp(a * i), width))
+
+        createPoly(width=previous_width, length=step, direction=direction, final_width=width)
+        previous_width = width
 
 
 #END of FUNCTION definitions
@@ -315,7 +325,9 @@ position.length = 0
 last_meander_draw(total_length=l_Zlow, width=t_Zlow, step=step_polygon)
 position.length = 0
 
+
 createPoly(width=t_Zlow, length=l_taper, direction='-y', final_width=t_final)  #tapering at the end
+#taper(t_Zlow, t_final, l_taper, direction='-y', step=step_polygon)
 
 l_final = chip_length/2 - abs(position.y)
 createPoly(width=t_final, length=l_final, direction='-y')

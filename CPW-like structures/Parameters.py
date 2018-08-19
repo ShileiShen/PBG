@@ -1,6 +1,6 @@
 import numpy
 
-filename = '2um420Res_L3mm_4cells_11x4chip_20W_242W.gds'
+filename = '2um420Res_L3mm_4cells_11x4chip_20W_242W_broad.gds'
 #filepath = 'C:/Users/z5119993/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/Reflection'  #for Windows
 filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 
@@ -29,9 +29,9 @@ w_sep = 4  #C finger separation
 h_sep = 2  #C finger vertical distance from ground plane fingers to resonator
 delta_x = 0  #offset for starting point of C fingers
 
-R_inner_low = 700 / 2 #radius for Round
-R_inner_high = 900 / 2
-R = 400 #radius for arc, const for low and high TL
+#R_inner_low = 700 / 2 #radius for Round
+#R_inner_high = 900 / 2
+R = 450 #radius for arc, const for low and high TL
 d_angle=numpy.pi/1000 #arc builder step
 
 c_gap = 0 #coupling capacitor separation
@@ -49,15 +49,15 @@ min_side_offset=700 #distance from the long side of the chip
 angle_error = 2*d_angle
 last_meander_side_offset=chip_width/2#-500 # last meander side offset excluding radius of the bend
 
-t_final=350 #the additional CPW for 50 Ohms match to PCB CPW-grounded
+t_final=430 #the additional CPW for 50 Ohms match to PCB CPW-grounded
 gap_final=140
-l_taper=250 #length of the tapered element
-l_final=200 #length of the polygon after it was tapered, will be parametrised according to the chip length
+l_taper=600 #length of the tapered element
+#l_final=300 #length of the polygon after it was tapered, will be parametrised according to the chip length
 
 #comment it out if not creating gnd plane
 #homogenous for the gap CPW
-# t_homogeneous=250
-# t_final=t_final+2*gap_final
-# t_Zlow = t_homogeneous
-# t_Zhigh = t_homogeneous
-# t_res = t_homogeneous
+t_homogeneous=250
+t_final=t_final+2*gap_final
+t_Zlow = t_homogeneous
+t_Zhigh = t_homogeneous
+t_res = t_homogeneous

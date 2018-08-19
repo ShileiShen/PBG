@@ -17,26 +17,9 @@
       <file leaf-file-name="PathCreator.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CPW-like structures/PathCreator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="217" column="0" lean-forward="true" selection-start-line="217" selection-start-column="0" selection-end-line="217" selection-end-column="0" />
-              <folding>
-                <element signature="e#231#400#0" expanded="false" />
-                <element signature="e#424#487#0" expanded="false" />
-                <element signature="e#576#887#0" expanded="false" />
-                <element signature="e#937#1201#0" expanded="false" />
-                <element signature="e#1245#3430#0" expanded="false" />
-                <element signature="e#3515#3671#0" expanded="false" />
-                <element signature="e#3755#3924#0" expanded="false" />
-                <element signature="e#3981#4414#0" expanded="false" />
-                <element signature="e#4476#4905#0" expanded="false" />
-                <element signature="e#4961#5397#0" expanded="false" />
-                <element signature="e#5006#5229#0" expanded="false" />
-                <element signature="e#5272#5360#0" expanded="false" />
-                <element signature="e#5458#5898#0" expanded="false" />
-                <element signature="e#5988#6767#0" expanded="false" />
-                <element signature="e#6900#8082#0" expanded="false" />
-                <element signature="e#8229#8858#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="314">
+              <caret line="335" column="0" lean-forward="true" selection-start-line="335" selection-start-column="0" selection-end-line="335" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -44,8 +27,8 @@
       <file leaf-file-name="Parameters.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CPW-like structures/Parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-839">
-              <caret line="2" column="42" lean-forward="true" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
+            <state relative-caret-position="38">
+              <caret line="2" column="57" lean-forward="false" selection-start-line="2" selection-start-column="57" selection-end-line="2" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -293,12 +276,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="797" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24065298" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32899022" sideWeight="0.49757114" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3148148" sideWeight="0.4160084" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3148148" sideWeight="0.5839916" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3148148" sideWeight="0.5839916" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32899022" sideWeight="0.49508426" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973656" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -552,34 +534,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CPW-like structures/Parameters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-839">
-          <caret line="2" column="42" lean-forward="true" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
+        <state relative-caret-position="38">
+          <caret line="2" column="57" lean-forward="false" selection-start-line="2" selection-start-column="57" selection-end-line="2" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CPW-like structures/PathCreator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="217" column="0" lean-forward="true" selection-start-line="217" selection-start-column="0" selection-end-line="217" selection-end-column="0" />
-          <folding>
-            <element signature="e#231#400#0" expanded="false" />
-            <element signature="e#424#487#0" expanded="false" />
-            <element signature="e#576#887#0" expanded="false" />
-            <element signature="e#937#1201#0" expanded="false" />
-            <element signature="e#1245#3430#0" expanded="false" />
-            <element signature="e#3515#3671#0" expanded="false" />
-            <element signature="e#3755#3924#0" expanded="false" />
-            <element signature="e#3981#4414#0" expanded="false" />
-            <element signature="e#4476#4905#0" expanded="false" />
-            <element signature="e#4961#5397#0" expanded="false" />
-            <element signature="e#5006#5229#0" expanded="false" />
-            <element signature="e#5272#5360#0" expanded="false" />
-            <element signature="e#5458#5898#0" expanded="false" />
-            <element signature="e#5988#6767#0" expanded="false" />
-            <element signature="e#6900#8082#0" expanded="false" />
-            <element signature="e#8229#8858#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="314">
+          <caret line="335" column="0" lean-forward="true" selection-start-line="335" selection-start-column="0" selection-end-line="335" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
