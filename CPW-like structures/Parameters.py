@@ -1,8 +1,8 @@
 import numpy
 
-filename = '2um420Res_L3mm_4cells_11x4chip_20W_242W_broad.gds'
-#filepath = 'C:/Users/z5119993/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/Reflection'  #for Windows
-filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
+filename = '2um420Res_L3mm_4cells_11x4chip_20W_242W_chip.gds'
+filepath = 'C:/Users/z5119993/Dropbox/PGB/Reflection/Raith'  #for Windows
+#filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 
 #Parameters ##  ALL UNITS IN MICRONS
 
