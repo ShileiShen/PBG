@@ -336,13 +336,13 @@ def meander_res_noIDC(total_length, width, step):
 
 
 cell = gdspy.Cell('PathCreator')
-# #define chip
+#define chip
 # position=Position.Position()
 # createPoly(chip_length,chip_width)
 
-# #draw a structure
+#draw a structure
 position= Position.Position(x=chip_width / 2 - l_res / 2, y=chip_length / 2 - edge_offset, direction='-x')
-meander_res_noIDC(total_length=4100,width=2, step=step_polygon)
+meander_res_noIDC(total_length=4100,width=t_res, step=step_polygon)
 
 
 

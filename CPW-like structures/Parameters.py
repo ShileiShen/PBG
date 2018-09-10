@@ -1,6 +1,6 @@
 import numpy
 
-filename = '2um4100Res_L3mm_4cells_11x4chip_20W_242W_noIDC.gds'
+filename = '2um4100Res_L3mm_4cells_11x4chip_20W_242W_homo.gds'
 filepath = 'C:/Users/z5119993/Dropbox/PGB/Reflection/Raith/noIDC'  #for Windows
 #filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 
@@ -15,10 +15,10 @@ t_Zhigh = 20
 l_Zlow = 3000
 t_Zlow = 242
 
-l_res = -1700 #length of lambda/2 resonator at 7.3 GHz
+l_res = -1200 #length of lambda/2 resonator at 7.3 GHz
 t_res = 2  #width of the resonator
 res_R=100 #arc radius for resonator without IDC
-
+gap_res=2 #gap for CPW resonator
 
 gap = 4  #gap between the Zlow and the ground plane
 w_gnd = 300  #width of the single ground plane for CPW structure
@@ -58,8 +58,8 @@ l_taper=600 #length of the tapered element
 
 # comment it out if not creating gnd plane
 #homogenous for the gap CPW
-# t_homogeneous=250
-# t_final=t_final+2*gap_final
-# t_Zlow = t_homogeneous
-# t_Zhigh = t_homogeneous
-# t_res = t_homogeneous
+t_homogeneous=250
+t_final=t_final+2*gap_final
+t_Zlow = t_homogeneous
+t_Zhigh = t_homogeneous
+t_res = t_res+2*gap_res
