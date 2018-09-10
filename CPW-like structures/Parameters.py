@@ -1,7 +1,7 @@
 import numpy
 
-filename = '2um420Res_L3mm_4cells_11x4chip_20W_242W_chip.gds'
-filepath = 'C:/Users/z5119993/Dropbox/PGB/Reflection/Raith'  #for Windows
+filename = '2um4100Res_L3mm_4cells_11x4chip_20W_242W_noIDC.gds'
+filepath = 'C:/Users/z5119993/Dropbox/PGB/Reflection/Raith/noIDC'  #for Windows
 #filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 
 #Parameters ##  ALL UNITS IN MICRONS
@@ -15,8 +15,10 @@ t_Zhigh = 20
 l_Zlow = 3000
 t_Zlow = 242
 
-l_res = 420 #length of lambda/2 resonator at 7.3 GHz
+l_res = -1700 #length of lambda/2 resonator at 7.3 GHz
 t_res = 2  #width of the resonator
+res_R=100 #arc radius for resonator without IDC
+
 
 gap = 4  #gap between the Zlow and the ground plane
 w_gnd = 300  #width of the single ground plane for CPW structure
@@ -54,10 +56,10 @@ gap_final=140
 l_taper=600 #length of the tapered element
 #l_final=300 #length of the polygon after it was tapered, will be parametrised according to the chip length
 
-#comment it out if not creating gnd plane
+# comment it out if not creating gnd plane
 #homogenous for the gap CPW
-t_homogeneous=250
-t_final=t_final+2*gap_final
-t_Zlow = t_homogeneous
-t_Zhigh = t_homogeneous
-t_res = t_homogeneous
+# t_homogeneous=250
+# t_final=t_final+2*gap_final
+# t_Zlow = t_homogeneous
+# t_Zhigh = t_homogeneous
+# t_res = t_homogeneous

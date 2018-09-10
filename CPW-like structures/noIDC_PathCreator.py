@@ -45,61 +45,61 @@ def createArc(width, radius, angle1, angle2):
 def resonator():
 	createPoly(t_res,l_res, spec_path=spec_res)
 	##%% Adding C fingers to the resonator
-	position.move_x(-l_res)
-
-	x_init = position.x  # x coordinate where the resonator starts
-	y_init = position.y + 0.5*t_res  # upper y coordinate of the resonator
-
-	x_start = x_init + delta_x  # start of C fingers on the resonator
-
-	def addCfinger(x0, y0, positive):
-		if positive:
-			cFinger = gdspy.Rectangle((x0, y0), (x0 + w_c, y0 + h_c), **spec_res)
-		else:
-			cFinger = gdspy.Rectangle((x0, y0), (x0 + w_c, y0 - h_c), **spec_res)
-		cell.add(cFinger)
-
-	x_step = 2 * w_c + 2 * w_sep
-	number_of_fingers = (l_res - 2 * delta_x + x_step) // (x_step)  # number of C fingers in one raw from one side only
-
-	for j in range(round(number_of_fingers)):
-		addCfinger(x_start + j * x_step, y_init, 1)
-		addCfinger(x_start + j * x_step, y_init - t_res, 0)
+	# position.move_x(-l_res)
+    #
+	# x_init = position.x  # x coordinate where the resonator starts
+	# y_init = position.y + 0.5*t_res  # upper y coordinate of the resonator
+    #
+	# x_start = x_init + delta_x  # start of C fingers on the resonator
+    #
+	# def addCfinger(x0, y0, positive):
+	# 	if positive:
+	# 		cFinger = gdspy.Rectangle((x0, y0), (x0 + w_c, y0 + h_c), **spec_res)
+	# 	else:
+	# 		cFinger = gdspy.Rectangle((x0, y0), (x0 + w_c, y0 - h_c), **spec_res)
+	# 	cell.add(cFinger)
+    #
+	# x_step = 2 * w_c + 2 * w_sep
+	# number_of_fingers = (l_res - 2 * delta_x + x_step) // (x_step)  # number of C fingers in one raw from one side only
+    #
+	# for j in range(round(number_of_fingers)):
+	# 	addCfinger(x_start + j * x_step, y_init, 1)
+	# 	addCfinger(x_start + j * x_step, y_init - t_res, 0)
 
 	##%%additional ground planes for resonator
-	gndRes_h = gap + t_Zlow / 2 - t_res / 2 - h_sep - h_c  # width of additional ground plane
-
-	gndRes_upper = gdspy.Rectangle((position.x, position.y + t_Zlow/2 + gap),
-	                               (position.x + l_res, position.y + t_Zlow/2 + gap - gndRes_h), **spec_res)
-	gndRes_bottom = gdspy.Rectangle((position.x, position.y - t_Zlow/2-gap), (position.x + l_res, position.y - t_Zlow/2-gap + gndRes_h), **spec_res)
-	cell.add(gndRes_bottom)
-	cell.add(gndRes_upper)
+	# gndRes_h = gap + t_Zlow / 2 - t_res / 2 - h_sep - h_c  # width of additional ground plane
+    #
+	# gndRes_upper = gdspy.Rectangle((position.x, position.y + t_Zlow/2 + gap),
+	#                                (position.x + l_res, position.y + t_Zlow/2 + gap - gndRes_h), **spec_res)
+	# gndRes_bottom = gdspy.Rectangle((position.x, position.y - t_Zlow/2-gap), (position.x + l_res, position.y - t_Zlow/2-gap + gndRes_h), **spec_res)
+	# cell.add(gndRes_bottom)
+	# cell.add(gndRes_upper)
 
 	##%%C fingers from additional ground planes
-	y_start_up = position.y + t_Zlow/2 + gap - gndRes_h
-	y_start_down = position.y - t_Zlow/2-gap + gndRes_h
+	# y_start_up = position.y + t_Zlow/2 + gap - gndRes_h
+	# y_start_down = position.y - t_Zlow/2-gap + gndRes_h
 
 	# fingers connected to ground planes
-	for i in range(round(number_of_fingers) - 1):
-		x_var1 = x_start + (i + 1) * (x_step) - w_sep - w_c
-		y_var1 = y_start_down
+	# for i in range(round(number_of_fingers) - 1):
+	# 	x_var1 = x_start + (i + 1) * (x_step) - w_sep - w_c
+	# 	y_var1 = y_start_down
+    #
+	# 	x_var2 = x_var1 + w_c
+	# 	y_var2 = y_var1 + h_c
+    #
+	# 	# down_finger = CreatePath([(x_var1,y_var1),(x_var2,y_var2)],w_c,layer=0)
+	# 	down_finger = gdspy.Rectangle((x_var1, y_var1), (x_var2, y_var2), **spec_res)
+    #
+	# 	y_var1_up = y_start_up
+	# 	y_var2_up = y_var1_up - h_c
+    #
+	# 	# up_finger = CreatePath([(x_var1,y_var1_up),(x_var2,y_var2_up)],w_c,layer=0)
+	# 	up_finger = gdspy.Rectangle((x_var1, y_var1_up), (x_var2, y_var2_up), **spec_res)
+    #
+	# 	cell.add(down_finger)
+	# 	cell.add(up_finger)
 
-		x_var2 = x_var1 + w_c
-		y_var2 = y_var1 + h_c
-
-		# down_finger = CreatePath([(x_var1,y_var1),(x_var2,y_var2)],w_c,layer=0)
-		down_finger = gdspy.Rectangle((x_var1, y_var1), (x_var2, y_var2), **spec_res)
-
-		y_var1_up = y_start_up
-		y_var2_up = y_var1_up - h_c
-
-		# up_finger = CreatePath([(x_var1,y_var1_up),(x_var2,y_var2_up)],w_c,layer=0)
-		up_finger = gdspy.Rectangle((x_var1, y_var1_up), (x_var2, y_var2_up), **spec_res)
-
-		cell.add(down_finger)
-		cell.add(up_finger)
-
-	position.x = position.move_x(l_res)
+	# position.x = position.move_x(l_res)
 
 	return cell
 
@@ -130,7 +130,25 @@ def arc_minus_x_draw(d_angle, total_length, width ):
 		position.arcContinue = False
 		position.angle = -numpy.pi/2
 	else:
-		position.arcContinue = True
+	    position.arcContinue = True
+
+
+def arc_minus_x_up_draw(d_angle, total_length, width ):
+    position.angle=3*numpy.pi/2
+    for n in range(round(numpy.pi / d_angle)):
+        if (position.length < total_length) and (position.angle >= numpy.pi/2):
+            createArc(width, res_R, position.angle, position.angle -d_angle)
+            position.length += d_angle * R
+            position.add_angle(-d_angle)
+        else:
+            break
+
+        if (position.angle <= numpy.pi/2):
+            position.change_direction()
+            position.arcContinue = False
+            position.angle = numpy.pi/2
+        else:
+            position.arcContinue = True
 
 
 def arc_half_minus_x_draw(d_angle, total_length, width):
@@ -292,6 +310,26 @@ def taper(initial_width, final_width, length, direction, step=step_polygon):
         previous_width = width
 
 
+def meander_res_noIDC(total_length, width, step):
+
+
+    if position.direction=='-x':
+
+        poly_minus_x_draw(total_length, width, step)
+        if position.length<total_length:
+            arc_minus_x_up_draw(d_angle, total_length, width)
+            position.change_direction()
+            position.arcContinue = False
+        if position.length<total_length:
+            meander_res_noIDC(total_length, width, step)
+
+    if position.direction=='+x':
+        poly_plus_x_draw(total_length, width, step)
+
+    print(str(position.length) + '/')
+
+
+
 #END of FUNCTION definitions
 ###################################################################################
 #Constracting the actual design by using function defined above
@@ -299,13 +337,19 @@ def taper(initial_width, final_width, length, direction, step=step_polygon):
 
 cell = gdspy.Cell('PathCreator')
 # #define chip
-position=Position.Position()
-createPoly(chip_length,chip_width)
+# position=Position.Position()
+# createPoly(chip_length,chip_width)
 
 # #draw a structure
+position= Position.Position(x=chip_width / 2 - l_res / 2, y=chip_length / 2 - edge_offset, direction='-x')
+meander_res_noIDC(total_length=4100,width=2, step=step_polygon)
+
+
+
+
 position= Position.Position(x=chip_width / 2 - l_res / 2, y=chip_length / 2 - edge_offset)
 
-resonator()
+#resonator()
 
 first_meander_draw(total_length=l_Zhigh, width=t_Zhigh, direction='+x', step=step_polygon)
 position.change_direction()
