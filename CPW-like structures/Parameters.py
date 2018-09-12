@@ -1,6 +1,6 @@
 import numpy
 
-filename = '2um4100Res_L3mm_4cells_11x4chip_20W_242W_homo.gds'
+filename = '2um4100Res_L3mm_4cells_11x4chip_20W_242W_homo_rounded_10um.gds'
 filepath = 'C:/Users/z5119993/Dropbox/PGB/Reflection/Raith/noIDC'  #for Windows
 #filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 
@@ -40,6 +40,7 @@ c_gap = 0 #coupling capacitor separation
 c_length = 0 #length of the polygon that has coupling capacitor
 
 spec = {'layer': 1, 'datatype': 1,'number_of_points': 0.9} #finese of arc
+spec_arc_res= {'layer': 1, 'datatype': 1,'number_of_points': 0.1}
 
 spec_path = {'layer': 1, 'datatype': 1} #standard specifications for Path polygon
 spec_res = {'layer': 0, 'datatype': 1} #standard specifications for Rectangular polygon used for Resonator creation

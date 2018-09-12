@@ -41,6 +41,16 @@ def createArc(width, radius, angle1, angle2):
 	position.x = cx + radius * numpy.cos(angle2)
 	position.y = cy + radius * numpy.sin(angle2)
 
+def createArcRes(width, radius, angle1, angle2):
+	path = initPath(width)
+	path.arc(radius, angle1, angle2, **spec_arc_res)
+	cell.add(path)
+	cx = position.x - radius * numpy.cos(angle1)
+	cy = position.y - radius * numpy.sin(angle1)
+	position.x = cx + radius * numpy.cos(angle2)
+	position.y = cy + radius * numpy.sin(angle2)
+
+
 #building IDC resonator
 def resonator():
 	createPoly(t_res,l_res, spec_path=spec_res)
@@ -137,7 +147,7 @@ def arc_minus_x_up_draw(d_angle, total_length, width ):
     position.angle=3*numpy.pi/2
     for n in range(round(numpy.pi / d_angle)):
         if (position.length < total_length) and (position.angle >= numpy.pi/2):
-            createArc(width, res_R, position.angle, position.angle -d_angle)
+            createArcRes(width, res_R, position.angle, position.angle -d_angle)
             position.length += d_angle * R
             position.add_angle(-d_angle)
         else:
@@ -342,6 +352,8 @@ cell = gdspy.Cell('PathCreator')
 
 #draw a structure
 position= Position.Position(x=chip_width / 2 - l_res / 2, y=chip_length / 2 - edge_offset, direction='-x')
+createPoly(width=t_Zhigh, length=10, direction='-x', final_width=t_res)  #tapering at the end
+
 meander_res_noIDC(total_length=4100,width=t_res, step=step_polygon)
 
 
