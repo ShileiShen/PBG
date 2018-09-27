@@ -11,17 +11,17 @@ import numpy
 
 print('Using gdspy module version ' + gdspy.__version__)
 
-#%% 
-## Parameters ##  ALL UNITS IN MICRONS
+#%%
+# Parameters ##  ALL UNITS IN MICRONS
 
 filename = 'path_L1.gds'
 #filepath = 'C:/A_MYKHAILO/simulations/Pattern/EBL designes/PBG/2018'
-filepath='/Users/mykhailo/Documents/UNSW/PBG'
+filepath = '/Users/mykhailo/Documents/UNSW/PBG'
 
 
-l_res=8100/2   #length of lambda/2 resonator at 7.3 GHz
-t_res=100 #width of the resonator
-gap_res=75 #resonator gap for Lk=0
+l_res = 8100 / 2   # length of lambda/2 resonator at 7.3 GHz
+t_res = 100  # width of the resonator
+gap_res = 75  # resonator gap for Lk=0
 
 ## End of parameters ##
 #%%
@@ -68,20 +68,20 @@ path_cell.add(
         layer=2))
 
 
-#%% 
+#%%
 ## Generate GDS ##
 ## ------------------------------------------------------------------ ##
 ##	OUTPUT															  ##
 ## ------------------------------------------------------------------ ##
-## Output the layout to a GDSII file (default to all created cells).
-## Set the units we used to micrometers and the precision to nanometers.
+# Output the layout to a GDSII file (default to all created cells).
+# Set the units we used to micrometers and the precision to nanometers.
 gdspy.gds_print(filepath + "/" + filename, unit=1.0e-6, precision=1.0e-9)
-print('gds file saved to "' + filepath +"\ " + filename + '"')
+print('gds file saved to "' + filepath + "\ " + filename + '"')
 
 ## ------------------------------------------------------------------ ##
 ##	VIEWER															  ##
 ## ------------------------------------------------------------------ ##
-## View the layout using a GUI.  Full description of the controls can
-## be found in the online help at http://gdspy.sourceforge.net/
-#gdspy.LayoutViewer()
+# View the layout using a GUI.  Full description of the controls can
+# be found in the online help at http://gdspy.sourceforge.net/
+# gdspy.LayoutViewer()
 print('Finished!')
