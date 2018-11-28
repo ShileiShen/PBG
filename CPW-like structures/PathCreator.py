@@ -312,8 +312,8 @@ def taper(initial_width, final_width, length, direction, step=step_polygon):
 
 cell = gdspy.Cell('PathCreator')
 # #define chip
-position = Position.Position()
-createPoly(chip_length, chip_width)
+# position = Position.Position()
+# createPoly(chip_length, chip_width)
 
 # #draw a structure
 position = Position.Position(

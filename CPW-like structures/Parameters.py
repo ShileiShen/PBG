@@ -1,7 +1,7 @@
 import numpy
 
-filename = '2um4100Res_L3mm_4cells_11x4chip_20W_242W_homo_rounded_10um.gds'
-filepath = 'C:/Users/z5119993/Dropbox/PGB/Reflection/Raith/noIDC'  # for Windows
+filename = '2um1000Res_L3mm_4cells_11x4chip_20W_242W.gds'
+filepath = 'C:/Users/z5119993/OneDrive - UNSW/research/patterns/PBG/2018/IDC_50Ohms'  # for Windows
 # filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 
 # Parameters ##  ALL UNITS IN MICRONS
@@ -15,7 +15,7 @@ t_Zhigh = 20
 l_Zlow = 3000
 t_Zlow = 242
 
-l_res = -1200  # length of lambda/2 resonator at 7.3 GHz
+l_res = 1000  # length of lambda/2 resonator at 7.3 GHz
 t_res = 2  # width of the resonator
 res_R = 100  # arc radius for resonator without IDC
 gap_res = 2  # gap for CPW resonator
@@ -28,7 +28,7 @@ w_gnd = 300  # width of the single ground plane for CPW structure
 number = 3
 
 w_c = 4  # C finger width
-h_c = 100  # C finger height
+h_c = 20  # C finger height
 w_sep = 4  # C finger separation
 h_sep = 2  # C finger vertical distance from ground plane fingers to resonator
 delta_x = 0  # offset for starting point of C fingers
@@ -66,8 +66,8 @@ l_taper = 600  # length of the tapered element
 
 # comment it out if not creating gnd plane
 # homogenous for the gap CPW
-t_homogeneous = 250
-t_final = t_final + 2 * gap_final
-t_Zlow = t_homogeneous
-t_Zhigh = t_homogeneous
-t_res = t_res + 2 * gap_res
+# t_homogeneous = 250
+# t_final = t_final + 2 * gap_final
+# t_Zlow = t_homogeneous
+# t_Zhigh = t_homogeneous
+# t_res = t_res + 2 * gap_res
