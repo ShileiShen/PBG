@@ -13,13 +13,13 @@ print('Using gdspy module version ' + gdspy.__version__)
 #%%
 # Parameters ##  ALL UNITS IN MICRONS
 
-filename = 'WF100_crack_vert.gds'
+filename = 'WF200_crack_horiz.gds'
 filepath = 'C:/Users/z5119993/OneDrive - UNSW/research/patterns/PBG/WF_crack'
 # filepath='/Users/mykhailo/Documents/UNSW/PBG'
 
 chip_length = 11000
 chip_width = 4000
-WF = 100
+WF = 200
 crack_width = 5  # len
 spec_path = {'layer': 1, 'datatype': 1}
 
@@ -69,6 +69,6 @@ position = Position.Position()
 createPoly(position=position, width=chip_length, length=chip_width, spec_path={'layer': 0, 'datatype': 1})
 
 # #draw a structure
-draw_vert()
-#draw_horiz()
+#draw_vert()
+draw_horiz()
 write()
