@@ -1,6 +1,6 @@
 import numpy
 
-filename = '2um1000Res_L3mm_4cells_11x4chip_20W_242W.gds'
+filename = '2um420Res_L3mm_4cells_11x4chip_20W_242W_120h_2gap_4all_chip.gds'
 filepath = 'C:/Users/z5119993/OneDrive - UNSW/research/patterns/PBG/2018/IDC_50Ohms'  # for Windows
 # filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 
@@ -15,7 +15,7 @@ t_Zhigh = 20
 l_Zlow = 3000
 t_Zlow = 242
 
-l_res = 1000  # length of lambda/2 resonator at 7.3 GHz
+l_res = 420  # length of lambda/2 resonator at 7.3 GHz
 t_res = 2  # width of the resonator
 res_R = 100  # arc radius for resonator without IDC
 gap_res = 2  # gap for CPW resonator
@@ -28,7 +28,7 @@ w_gnd = 300  # width of the single ground plane for CPW structure
 number = 3
 
 w_c = 4  # C finger width
-h_c = 20  # C finger height
+h_c = 120  # C finger height
 w_sep = 4  # C finger separation
 h_sep = 2  # C finger vertical distance from ground plane fingers to resonator
 delta_x = 0  # offset for starting point of C fingers
@@ -46,6 +46,7 @@ spec_arc_res = {'layer': 1, 'datatype': 1, 'number_of_points': 0.1}
 
 # standard specifications for Path polygon
 spec_path = {'layer': 1, 'datatype': 1}
+spec_path_chip = {'layer': 2, 'datatype': 1}
 # standard specifications for Rectangular polygon used for Resonator creation
 spec_res = {'layer': 0, 'datatype': 1}
 step_polygon = 5  # check stepper for polygon builder
@@ -58,8 +59,8 @@ angle_error = 2 * d_angle
 # -500 # last meander side offset excluding radius of the bend
 last_meander_side_offset = chip_width / 2
 
-t_final = 430  # the additional CPW for 50 Ohms match to PCB CPW-grounded
-gap_final = 140
+t_final = 200  # the additional CPW for 50 Ohms match to PCB CPW-grounded
+gap_final = 130
 l_taper = 600  # length of the tapered element
 # l_final=300 #length of the polygon after it was tapered, will be
 # parametrised according to the chip length
@@ -70,4 +71,4 @@ l_taper = 600  # length of the tapered element
 # t_final = t_final + 2 * gap_final
 # t_Zlow = t_homogeneous
 # t_Zhigh = t_homogeneous
-# t_res = t_res + 2 * gap_res
+# t_res = t_res + 2*gap_res + 2*h_sep + 2*h_c
