@@ -2,7 +2,8 @@
 """
 Created on Mon Feb 26 15:40:58 2018
 
-@author: z5119993
+@author: Mykhailo Savytskyi
+@email: m.savytskyi@unsw.edu.au
 """
 import numpy
 

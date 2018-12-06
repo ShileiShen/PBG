@@ -2,7 +2,8 @@
 """
 Created on Mon Feb 26 19:15:12 2018
 
-@author: Mykhailo Savytskyi 
+@author: Mykhailo Savytskyi
+@email: m.savytskyi@unsw.edu.au
 """
 import gdspy
 import Position

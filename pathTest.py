@@ -2,7 +2,8 @@
 """
 Created on Wed Mar 21 16:40:49 2018
 
-@author: z5119993
+@author: Mykhailo Savytskyi
+@email: m.savytskyi@unsw.edu.au
 """
 
 import gdspy

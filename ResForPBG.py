@@ -2,7 +2,8 @@
 """
 Created on Fri Dec  1 17:32:20 2017
 
-@author: Mykhailo Savytskyi 
+@author: Mykhailo Savytskyi
+@email: m.savytskyi@unsw.edu.au
 """
 #import numpy as np
 import gdspy

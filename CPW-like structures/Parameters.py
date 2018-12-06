@@ -1,3 +1,7 @@
+"""
+@author: Mykhailo Savytskyi
+@email: m.savytskyi@unsw.edu.au
+"""
 import numpy
 
 filename = '2um420Res_L3mm_4cells_11x4chip_20W_242W_120h_2gap_4all_chip.gds'

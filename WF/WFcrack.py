@@ -1,6 +1,7 @@
 """
 @author: Mykhailo Savytskyi
 @date: 22/11/2018
+@email: m.savytskyi@unsw.edu.au
 """
 
 import gdspy

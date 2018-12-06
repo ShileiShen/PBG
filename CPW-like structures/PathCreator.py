@@ -1,5 +1,6 @@
 """
 @author: Mykhailo Savytskyi
+@email: m.savytskyi@unsw.edu.au
 """
 import gdspy
 import Position
