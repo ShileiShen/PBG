@@ -3,9 +3,9 @@
 @email: m.savytskyi@unsw.edu.au
 """
 import gdspy
-import Position
+from pathLibrary import Position
 #import numpy
-from Parameters import *
+from pathLibrary.Parameters import *
 
 print('Using gdspy module version ' + gdspy.__version__)
 
@@ -51,6 +51,7 @@ def createArc(width, radius, angle1, angle2):
 
 
 def resonator():
+    print(l_res)
     createPoly(t_res, l_res, spec_path=spec_res)
     # %% Adding C fingers to the resonator
     position.move_x(-l_res)

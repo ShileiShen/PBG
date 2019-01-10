@@ -40,3 +40,11 @@ class Position:
     def add_angle(self, value):
         self.angle += value
         return self.angle
+
+    def __str__(self):
+        return '(x = {0.x!s}, y = {0.y!s}), length = {0.length!s}'.format(self)
+
+    def __repr__(self):
+        #return '({0.x!r}, {0.y!r}, {0.length!r})'.format(self)
+        return '(x = {0.x!s}, y = {0.y!s}), length = {0.length!s}'.format(self)
+
