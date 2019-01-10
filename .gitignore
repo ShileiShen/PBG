@@ -16,3 +16,4 @@ PathCreator.py
 .pydevproject
 .settings/org.eclipse.core.resources.prefs
 *.xml
+*.xml
