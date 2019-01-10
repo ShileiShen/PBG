@@ -119,6 +119,7 @@ def resonator():
     return cell
 
 
+
 def poly_minus_x_draw(total_length, width, step, side_offset=min_side_offset):
     while (position.x > side_offset + R) and (position.length < total_length):
         createPoly(width, step, direction=position.direction)
@@ -293,6 +294,21 @@ def first_meander_draw(total_length, width, step, direction):
         if length < total_length:
             createPoly(t_Zhigh, total_length - length, direction='-x')
 
+
+def first_meander_trans(total_length, width, step, direction):
+    length = 0
+    if direction == '+x':
+        while position.x < chip_width - min_side_offset - R:
+            createPoly(width, step, direction=direction)
+            length += step
+        if length < total_length:
+            createArc(t_Zhigh, -R, -numpy.pi / 2.0, -numpy.pi)
+            length += numpy.pi * R / 2
+        if length < total_length:
+            createPoly(t_Zhigh, total_length - length, direction='-y')
+
+    if direction == '-y':
+        pass
 
 def taper(initial_width, final_width, length, direction, step=step_polygon):
     a = (1 / float(length)) * numpy.log(final_width / float(initial_width))
