@@ -3,7 +3,7 @@
 @email: m.savytskyi@unsw.edu.au
 """
 
-from pathLibrary import PathCreatorLibrary as p
+import PathCreatorLibrary as p
 
 p.filename = 'meanderL_W3um_G9um_L300um.gds'
 p.filepath = 'C:/Users/z5119993/OneDrive - UNSW/research/Anderson'  # for Windows

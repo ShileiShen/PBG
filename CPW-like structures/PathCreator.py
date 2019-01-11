@@ -4,7 +4,6 @@
 """
 import gdspy
 import Position
-import numpy
 from Parameters import *
 
 print('Using gdspy module version ' + gdspy.__version__)

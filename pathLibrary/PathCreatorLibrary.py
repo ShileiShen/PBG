@@ -3,15 +3,15 @@
 @email: m.savytskyi@unsw.edu.au
 """
 import gdspy
-from pathLibrary import Position
+import Position
 #import numpy
-from pathLibrary.Parameters import *
+from Parameters import *
 
 print('Using gdspy module version ' + gdspy.__version__)
 
 # fuction that writes the created structure to gds file
 cell = gdspy.Cell('PathCreator')
-position=Position.Position()
+position= Position.Position()
 
 def write():
     gdspy.write_gds(filepath + "/" + filename, unit=1.0e-6, precision=1.0e-9)
@@ -132,6 +132,15 @@ def poly_plus_x_draw(total_length, width, step, side_offset=min_side_offset):
         createPoly(width, step, direction=position.direction)
         position.length += step
 
+def poly_minus_y_draw(total_length, width, step, side_offset=min_side_offset):
+    while (position.x <= chip_width - side_offset + 5) and (position.x >= side_offset - 5) and (position.length < total_length) and (abs(position.y) <= abs((chip_length / 2) - R - bottom_offset)):
+        createPoly(width, step, direction=position.direction)
+        position.length += step
+
+def poly_plus_y_draw(total_length, width, step, side_offset=min_side_offset):
+    while (position.x <= chip_width - side_offset) and (position.x >= side_offset) and (position.length < total_length) and (position.y < chip_length / 2 - R - top_offset - edge_offset):
+        createPoly(width, step, direction=position.direction)
+        position.length += step
 
 def arc_minus_x_draw(d_angle, total_length, width):
 
@@ -149,6 +158,82 @@ def arc_minus_x_draw(d_angle, total_length, width):
         position.angle = -numpy.pi / 2
     else:
         position.arcContinue = True
+
+
+def arc_minus_y_draw(d_angle, total_length, width):
+
+    for n in range(round(numpy.pi / d_angle)):
+        if (position.length < total_length) and (position.angle >= -numpy.pi ):
+            createArc(width, R, position.angle, position.angle - d_angle)
+            position.length += d_angle * R
+            position.add_angle(-d_angle)
+        else:
+            break
+
+    if (position.angle - d_angle <= -numpy.pi):
+        position.direction = '+y'
+        position.arcContinue = False
+        position.angle = 0
+    else:
+        position.arcContinue = True
+
+    print('minus_Y:arcCont =', position.arcContinue)
+
+def arc_minus_y_draw_left(d_angle, total_length, width):
+
+    for n in range(round(numpy.pi / d_angle)):
+        if (position.length < total_length) and (position.angle <= 2*numpy.pi ):
+            createArc(width, R, position.angle, position.angle + d_angle)
+            position.length += d_angle * R
+            position.add_angle(+d_angle)
+        else:
+            break
+
+    if (position.angle + d_angle >= 2*numpy.pi):
+        position.direction = '+y'
+        position.arcContinue = False
+        position.angle = numpy.pi
+    else:
+        position.arcContinue = True
+
+    print('minus_Y_left:arcCont =', position.arcContinue)
+
+def arc_plus_y_draw(d_angle, total_length, width):
+    for n in range(round(numpy.pi / d_angle)):
+        if (position.length < total_length) and (position.angle <= numpy.pi):
+            createArc(width, R, position.angle, position.angle + d_angle)
+            position.length += d_angle * R
+            position.add_angle(+d_angle)
+        else:
+            break
+
+    if (position.angle + d_angle >= numpy.pi):
+        position.direction = '-y'
+        position.arcContinue = False
+        position.angle = 0
+    else:
+        position.arcContinue = True
+
+    print('plus_Y:arcCont =', position.arcContinue)
+
+def arc_plus_y_draw_left(d_angle, total_length, width):
+    for n in range(round(numpy.pi / d_angle)):
+        if (position.length < total_length) and (position.angle >= 0):
+            createArc(width, R, position.angle, position.angle - d_angle)
+            position.length += d_angle * R
+            position.add_angle(-d_angle)
+        else:
+            break
+
+    if (position.angle - d_angle <= 0):
+        position.direction = '-y'
+        position.arcContinue = False
+        position.angle = numpy.pi
+    else:
+        position.arcContinue = True
+
+    print('plus_Y:arcCont =', position.arcContinue)
+
 
 
 def arc_half_minus_x_draw(d_angle, total_length, width):
@@ -225,11 +310,42 @@ def meander_draw(total_length, width, step):
             if position.length < total_length:
                 meander_draw(total_length, width, step)
 
+        if position.direction == '-y':
+            poly_minus_y_draw(total_length, width, step)
+            if position.length < total_length:
+                if position.x <= chip_width/2:
+                    arc_minus_y_draw_left(d_angle, total_length, width)
+                else:
+                    arc_minus_y_draw(d_angle, total_length, width)
+            if position.length < total_length:
+                meander_draw(total_length, width, step)
+
+        if position.direction == '+y':
+            poly_plus_y_draw(total_length, width, step)
+            if position.length < total_length:
+                if position.x <=chip_width/2:
+                    arc_plus_y_draw_left(d_angle, total_length, width)
+                else:
+                    arc_plus_y_draw(d_angle, total_length, width)
+            if position.length < total_length:
+                meander_draw(total_length, width, step)
+
     else:
-        if position.angle < 0:
-            arc_plus_x_draw(d_angle, total_length, width)
-        else:
-            arc_minus_x_draw(d_angle, total_length, width)
+        if position.direction == '+x' or position.direction == '-x':
+            if position.angle < 0:
+                arc_plus_x_draw(d_angle, total_length, width)
+            else:
+                arc_minus_x_draw(d_angle, total_length, width)
+        elif position.direction == '-y':
+            if position.x <= chip_width / 2:
+                arc_minus_y_draw_left(d_angle, total_length, width)
+            else:
+                arc_minus_y_draw(d_angle, total_length, width)
+        elif position.direction == '+y':
+            if position.x <= chip_width / 2:
+                arc_plus_y_draw_left(d_angle, total_length, width)
+            else:
+                arc_plus_y_draw(d_angle, total_length, width)
         if position.length < total_length:
             meander_draw(total_length, width, step)
 
@@ -308,8 +424,15 @@ def first_meander_trans(total_length, width, step, direction):
         if length < total_length:
             createPoly(t_Zhigh, total_length - length, direction='-y')
 
-    if direction == '-y':
-        pass
+    if direction == '-x':
+        while position.x > min_side_offset + R:
+            createPoly(width, step, direction=direction)
+            length += step
+        if length < total_length:
+            createArc(t_Zhigh, R, numpy.pi / 2.0, numpy.pi)
+            length += numpy.pi * R / 2
+        if length < total_length:
+            createPoly(t_Zhigh, total_length - length, direction='-y')
 
 def taper(initial_width, final_width, length, direction, step=step_polygon):
     a = (1 / float(length)) * numpy.log(final_width / float(initial_width))

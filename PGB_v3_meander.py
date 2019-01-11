@@ -7,7 +7,6 @@ Created on Mon Feb 26 15:26:07 2018
 """
 import gdspy
 import Position
-import numpy
 from Parameters import *
 
 print('Using gdspy module version ' + gdspy.__version__)

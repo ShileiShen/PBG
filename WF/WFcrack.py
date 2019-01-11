@@ -6,8 +6,6 @@
 
 import gdspy
 import Position
-import numpy
-
 
 print('Using gdspy module version ' + gdspy.__version__)
 
@@ -53,14 +51,14 @@ def createPoly(position, width, length, direction='+x', final_width=None, spec_p
 def draw_vert():
 	N = int(chip_width/WF)
 	for i in range(N-1):
-		position = Position.Position(x=WF+i*WF, y=-chip_length/2)
+		position = Position.Position(x=WF + i * WF, y=-chip_length / 2)
 		createPoly(position, width=crack_width, length=chip_length, direction='+y')
 
 
 def draw_horiz():
 	N = int(chip_length / WF)
 	for i in range(N - 1):
-		position = Position.Position(y=-chip_length/2 + WF + i * WF, x=0)
+		position = Position.Position(y=-chip_length / 2 + WF + i * WF, x=0)
 		createPoly(position, width=crack_width, length=chip_width, direction='+x')
 ## Constracting the actual design by using function defined above
 
