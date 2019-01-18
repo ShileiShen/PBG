@@ -7,7 +7,7 @@ import PathCreatorLibrary as p
 from Position import Position
 from Parameters import *
 
-p.filename = 'refl_2um420Res_L3mm_4cells_11x4chip_20W_242W_120h_2gap_4all_WIDE.gds'
+p.filename = 'Refl_2um768Res_L3mm_4cells_11x4chip_20W_242W_120h_2gap_4all_WIDE.gds'
 p.filepath = 'C:/Users/z5119993/OneDrive - UNSW/research/patterns/PBG/Reflection/CST'  # for Windows
 
 p.createPoly(chip_length, chip_width, spec_path=spec_path_chip)
