@@ -8,7 +8,7 @@ from Parameters import *
 from Position import Position
 import numpy
 
-p.filename = 'tr_2um868Res_L3mm_4cells_11x4chip_20W_242W_120h_2gap_4all_WIDE.gds'
+p.filename = 'tr_2um868Res_L3mm_4cells_11x4chip_20W_242W_120h_2gap_4all_In100um_WIDE.gds'
 p.filepath = 'C:/Users/z5119993/OneDrive - UNSW/research/patterns/PBG/Transmission/2019'  # for Windows
 #p.filepath = '/Users/mykhailo/OneDrive - UNSW/research/patterns/PBG/Transmission/2019' #for Mac
 
