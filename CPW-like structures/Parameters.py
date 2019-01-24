@@ -5,7 +5,7 @@
 import numpy
 
 filename = '2um420Res_L3mm_4cells_11x4chip_20W_242W_120h_2gap_4all_chip.gds'
-filepath = 'C:/Users/z5119993/OneDrive - UNSW/research/patterns/PBG/2018/IDC_50Ohms'  # for Windows
+filepath = 'C:/Users/z5119993/OneDrive - UNSW/research/patterns/PBG/2018'  # for Windows
 # filepath = '/Users/mykhailo/Documents/UNSW/PBG'  #for Mac
 
 # Parameters ##  ALL UNITS IN MICRONS
